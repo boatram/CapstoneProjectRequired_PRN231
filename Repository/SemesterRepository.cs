@@ -87,6 +87,7 @@ namespace Repository
                                         var stu = rs.Where(a => a.Semester.Code == account.SemesterCode && a.Subject.Code == account.SubjectCode && a.Student.Code == account.StudentCode).SingleOrDefault();
                                         if(stu !=null)
                                         {
+                                            if (stu.Status == account.Status) continue;
                                             stu.SemesterId = semester.Id;
                                             stu.Status = account.Status;
                                             StudentInSemesterDAO.Instance.Update(stu, stu.Id);
