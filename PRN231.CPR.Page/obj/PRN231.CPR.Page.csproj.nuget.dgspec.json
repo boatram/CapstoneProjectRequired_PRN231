@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\PRN231\\PRN231.CPR\\PRN231.CPR.Page\\PRN231.CPR.Page.csproj": {}
+    "D:\\CapstoneProjectRequired_PRN231\\PRN231.CPR.Page\\PRN231.CPR.Page.csproj": {}
   },
   "projects": {
-    "D:\\PRN231\\PRN231.CPR\\BusinessObjects\\BusinessObjects.csproj": {
+    "D:\\CapstoneProjectRequired_PRN231\\BusinessObjects\\BusinessObjects.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\PRN231\\PRN231.CPR\\BusinessObjects\\BusinessObjects.csproj",
+        "projectUniqueName": "D:\\CapstoneProjectRequired_PRN231\\BusinessObjects\\BusinessObjects.csproj",
         "projectName": "BusinessObjects",
-        "projectPath": "D:\\PRN231\\PRN231.CPR\\BusinessObjects\\BusinessObjects.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\PRN231\\PRN231.CPR\\BusinessObjects\\obj\\",
+        "projectPath": "D:\\CapstoneProjectRequired_PRN231\\BusinessObjects\\BusinessObjects.csproj",
+        "packagesPath": "C:\\Users\\Hoang Anh\\.nuget\\packages\\",
+        "outputPath": "D:\\CapstoneProjectRequired_PRN231\\BusinessObjects\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Hoang Anh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -52,6 +52,38 @@
               "target": "Package",
               "version": "[12.0.1, )"
             },
+            "EPPlus": {
+              "target": "Package",
+              "version": "[6.2.9, )"
+            },
+            "Firebase.Auth": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "FirebaseStorage.net": {
+              "target": "Package",
+              "version": "[1.0.3, )"
+            },
+            "Google.Apis.Auth": {
+              "target": "Package",
+              "version": "[1.62.1, )"
+            },
+            "Google.Apis.Auth.AspNetCore3": {
+              "target": "Package",
+              "version": "[1.62.1, )"
+            },
+            "Microsoft.AspNetCore.Authentication.Google": {
+              "target": "Package",
+              "version": "[6.0.22, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.22, )"
+            },
+            "Microsoft.AspNetCore.OData": {
+              "target": "Package",
+              "version": "[8.2.3, )"
+            },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
@@ -75,6 +107,10 @@
             "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
               "version": "[6.0.0, )"
+            },
+            "Vse.Web.Serialization.ControlledSerializationJsonConverter": {
+              "target": "Package",
+              "version": "[1.0.4, )"
             }
           },
           "imports": [
@@ -93,24 +129,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\PRN231\\PRN231.CPR\\DataAccess\\DataAccess.csproj": {
+    "D:\\CapstoneProjectRequired_PRN231\\DataAccess\\DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\PRN231\\PRN231.CPR\\DataAccess\\DataAccess.csproj",
+        "projectUniqueName": "D:\\CapstoneProjectRequired_PRN231\\DataAccess\\DataAccess.csproj",
         "projectName": "DataAccess",
-        "projectPath": "D:\\PRN231\\PRN231.CPR\\DataAccess\\DataAccess.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\PRN231\\PRN231.CPR\\DataAccess\\obj\\",
+        "projectPath": "D:\\CapstoneProjectRequired_PRN231\\DataAccess\\DataAccess.csproj",
+        "packagesPath": "C:\\Users\\Hoang Anh\\.nuget\\packages\\",
+        "outputPath": "D:\\CapstoneProjectRequired_PRN231\\DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Hoang Anh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -125,8 +161,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\PRN231\\PRN231.CPR\\BusinessObjects\\BusinessObjects.csproj": {
-                "projectPath": "D:\\PRN231\\PRN231.CPR\\BusinessObjects\\BusinessObjects.csproj"
+              "D:\\CapstoneProjectRequired_PRN231\\BusinessObjects\\BusinessObjects.csproj": {
+                "projectPath": "D:\\CapstoneProjectRequired_PRN231\\BusinessObjects\\BusinessObjects.csproj"
               }
             }
           }
@@ -148,6 +184,38 @@
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[12.0.1, )"
+            },
+            "EPPlus": {
+              "target": "Package",
+              "version": "[6.2.9, )"
+            },
+            "Firebase.Auth": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "FirebaseStorage.net": {
+              "target": "Package",
+              "version": "[1.0.3, )"
+            },
+            "Google.Apis.Auth": {
+              "target": "Package",
+              "version": "[1.62.1, )"
+            },
+            "Google.Apis.Auth.AspNetCore3": {
+              "target": "Package",
+              "version": "[1.62.1, )"
+            },
+            "Microsoft.AspNetCore.Authentication.Google": {
+              "target": "Package",
+              "version": "[6.0.22, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.22, )"
+            },
+            "Microsoft.AspNetCore.OData": {
+              "target": "Package",
+              "version": "[8.2.3, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -172,6 +240,10 @@
             "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
               "version": "[6.0.0, )"
+            },
+            "Vse.Web.Serialization.ControlledSerializationJsonConverter": {
+              "target": "Package",
+              "version": "[1.0.4, )"
             }
           },
           "imports": [
@@ -190,24 +262,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\PRN231\\PRN231.CPR\\PRN231.CPR.API\\PRN231.CPR.API.csproj": {
+    "D:\\CapstoneProjectRequired_PRN231\\PRN231.CPR.API\\PRN231.CPR.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\PRN231\\PRN231.CPR\\PRN231.CPR.API\\PRN231.CPR.API.csproj",
+        "projectUniqueName": "D:\\CapstoneProjectRequired_PRN231\\PRN231.CPR.API\\PRN231.CPR.API.csproj",
         "projectName": "PRN231.CPR.API",
-        "projectPath": "D:\\PRN231\\PRN231.CPR\\PRN231.CPR.API\\PRN231.CPR.API.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\PRN231\\PRN231.CPR\\PRN231.CPR.API\\obj\\",
+        "projectPath": "D:\\CapstoneProjectRequired_PRN231\\PRN231.CPR.API\\PRN231.CPR.API.csproj",
+        "packagesPath": "C:\\Users\\Hoang Anh\\.nuget\\packages\\",
+        "outputPath": "D:\\CapstoneProjectRequired_PRN231\\PRN231.CPR.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Hoang Anh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -216,15 +288,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.304\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\PRN231\\PRN231.CPR\\Repository\\Repository.csproj": {
-                "projectPath": "D:\\PRN231\\PRN231.CPR\\Repository\\Repository.csproj"
+              "D:\\CapstoneProjectRequired_PRN231\\Repository\\Repository.csproj": {
+                "projectPath": "D:\\CapstoneProjectRequired_PRN231\\Repository\\Repository.csproj"
               }
             }
           }
@@ -246,6 +317,42 @@
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[12.0.1, )"
+            },
+            "EPPlus": {
+              "target": "Package",
+              "version": "[6.2.9, )"
+            },
+            "Firebase.Auth": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "FirebaseStorage.net": {
+              "target": "Package",
+              "version": "[1.0.3, )"
+            },
+            "Google.Apis.Auth": {
+              "target": "Package",
+              "version": "[1.62.1, )"
+            },
+            "Google.Apis.Auth.AspNetCore3": {
+              "target": "Package",
+              "version": "[1.62.1, )"
+            },
+            "Microsoft.AspNet.OData": {
+              "target": "Package",
+              "version": "[7.7.1, )"
+            },
+            "Microsoft.AspNetCore.Authentication.Google": {
+              "target": "Package",
+              "version": "[6.0.22, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.22, )"
+            },
+            "Microsoft.AspNetCore.OData": {
+              "target": "Package",
+              "version": "[8.2.3, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -278,6 +385,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.5.0, )"
+            },
+            "Vse.Web.Serialization.ControlledSerializationJsonConverter": {
+              "target": "Package",
+              "version": "[1.0.4, )"
             }
           },
           "imports": [
@@ -299,24 +410,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\PRN231\\PRN231.CPR\\PRN231.CPR.Page\\PRN231.CPR.Page.csproj": {
+    "D:\\CapstoneProjectRequired_PRN231\\PRN231.CPR.Page\\PRN231.CPR.Page.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\PRN231\\PRN231.CPR\\PRN231.CPR.Page\\PRN231.CPR.Page.csproj",
+        "projectUniqueName": "D:\\CapstoneProjectRequired_PRN231\\PRN231.CPR.Page\\PRN231.CPR.Page.csproj",
         "projectName": "PRN231.CPR.Page",
-        "projectPath": "D:\\PRN231\\PRN231.CPR\\PRN231.CPR.Page\\PRN231.CPR.Page.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\PRN231\\PRN231.CPR\\PRN231.CPR.Page\\obj\\",
+        "projectPath": "D:\\CapstoneProjectRequired_PRN231\\PRN231.CPR.Page\\PRN231.CPR.Page.csproj",
+        "packagesPath": "C:\\Users\\Hoang Anh\\.nuget\\packages\\",
+        "outputPath": "D:\\CapstoneProjectRequired_PRN231\\PRN231.CPR.Page\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Hoang Anh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -325,15 +436,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.304\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\PRN231\\PRN231.CPR\\PRN231.CPR.API\\PRN231.CPR.API.csproj": {
-                "projectPath": "D:\\PRN231\\PRN231.CPR\\PRN231.CPR.API\\PRN231.CPR.API.csproj"
+              "D:\\CapstoneProjectRequired_PRN231\\PRN231.CPR.API\\PRN231.CPR.API.csproj": {
+                "projectPath": "D:\\CapstoneProjectRequired_PRN231\\PRN231.CPR.API\\PRN231.CPR.API.csproj"
               }
             }
           }
@@ -355,6 +465,38 @@
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[12.0.1, )"
+            },
+            "EPPlus": {
+              "target": "Package",
+              "version": "[6.2.9, )"
+            },
+            "Firebase.Auth": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "FirebaseStorage.net": {
+              "target": "Package",
+              "version": "[1.0.3, )"
+            },
+            "Google.Apis.Auth": {
+              "target": "Package",
+              "version": "[1.62.1, )"
+            },
+            "Google.Apis.Auth.AspNetCore3": {
+              "target": "Package",
+              "version": "[1.62.1, )"
+            },
+            "Microsoft.AspNetCore.Authentication.Google": {
+              "target": "Package",
+              "version": "[6.0.22, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.22, )"
+            },
+            "Microsoft.AspNetCore.OData": {
+              "target": "Package",
+              "version": "[8.2.3, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -379,6 +521,10 @@
             "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
               "version": "[6.0.0, )"
+            },
+            "Vse.Web.Serialization.ControlledSerializationJsonConverter": {
+              "target": "Package",
+              "version": "[1.0.4, )"
             }
           },
           "imports": [
@@ -400,24 +546,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\PRN231\\PRN231.CPR\\Repository\\Repository.csproj": {
+    "D:\\CapstoneProjectRequired_PRN231\\Repository\\Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\PRN231\\PRN231.CPR\\Repository\\Repository.csproj",
+        "projectUniqueName": "D:\\CapstoneProjectRequired_PRN231\\Repository\\Repository.csproj",
         "projectName": "Repository",
-        "projectPath": "D:\\PRN231\\PRN231.CPR\\Repository\\Repository.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\PRN231\\PRN231.CPR\\Repository\\obj\\",
+        "projectPath": "D:\\CapstoneProjectRequired_PRN231\\Repository\\Repository.csproj",
+        "packagesPath": "C:\\Users\\Hoang Anh\\.nuget\\packages\\",
+        "outputPath": "D:\\CapstoneProjectRequired_PRN231\\Repository\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Hoang Anh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -432,8 +578,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\PRN231\\PRN231.CPR\\DataAccess\\DataAccess.csproj": {
-                "projectPath": "D:\\PRN231\\PRN231.CPR\\DataAccess\\DataAccess.csproj"
+              "D:\\CapstoneProjectRequired_PRN231\\DataAccess\\DataAccess.csproj": {
+                "projectPath": "D:\\CapstoneProjectRequired_PRN231\\DataAccess\\DataAccess.csproj"
               }
             }
           }
@@ -455,6 +601,38 @@
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[12.0.1, )"
+            },
+            "EPPlus": {
+              "target": "Package",
+              "version": "[6.2.9, )"
+            },
+            "Firebase.Auth": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "FirebaseStorage.net": {
+              "target": "Package",
+              "version": "[1.0.3, )"
+            },
+            "Google.Apis.Auth": {
+              "target": "Package",
+              "version": "[1.62.1, )"
+            },
+            "Google.Apis.Auth.AspNetCore3": {
+              "target": "Package",
+              "version": "[1.62.1, )"
+            },
+            "Microsoft.AspNetCore.Authentication.Google": {
+              "target": "Package",
+              "version": "[6.0.22, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.22, )"
+            },
+            "Microsoft.AspNetCore.OData": {
+              "target": "Package",
+              "version": "[8.2.3, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -479,6 +657,10 @@
             "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
               "version": "[6.0.0, )"
+            },
+            "Vse.Web.Serialization.ControlledSerializationJsonConverter": {
+              "target": "Package",
+              "version": "[1.0.4, )"
             }
           },
           "imports": [
@@ -497,7 +679,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,4 +1,5 @@
 ﻿using BusinessObjects;
+using BusinessObjects.BusinessObjects;
 using BusinessObjects.DTOs.Request;
 using BusinessObjects.DTOs.Response;
 using System;
@@ -27,7 +28,7 @@ namespace DataAccess
                 }
             }
         }
-
+        
         public IEnumerable<SemesterResponse> GetSemesters()
         {
             var semesters = new List<SemesterResponse>();
@@ -112,7 +113,7 @@ namespace DataAccess
                 throw new Exception(ex.Message);
             }
         }
-
+       
         public void Update(int Id)
         {
             try

@@ -1,4 +1,5 @@
 ﻿using BusinessObjects;
+using BusinessObjects.BusinessObjects;
 using BusinessObjects.DTOs;
 using System;
 using System.Collections.Generic;
@@ -35,14 +36,13 @@ namespace DataAccess
                 using var context = new CPRContext();
                 topics = context.TopicOfLecturers.Select(x => new TopicView
                 {
-                    Id = x.Id,
                     Topic = context.Topics.SingleOrDefault(t => t.Id == x.TopicId),
                     Name = x.Topic.Name,
                     Description = x.Topic.Description,
                     Status = x.Topic.Status,
                     SemesterCode = x.Topic.Semester.Code,
                     SpecializationName = x.Topic.Specialization.Name,
-                    SuperLecturerEmail = context.TopicOfLecturers.Where(c => c.Id == x.LecturerId).SingleOrDefault(l => l.IsSuperLecturer.Equals(true)).Lecturer.Email,
+                    SuperLecturerEmail = context.Accounts.Where(c => c.Id == x.LecturerId && x.IsSuperLecturer==true).SingleOrDefault().Email,
                 }).ToList();
             }
             catch (Exception ex)

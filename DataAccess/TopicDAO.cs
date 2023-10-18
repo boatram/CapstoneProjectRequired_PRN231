@@ -1,7 +1,9 @@
 ﻿using BusinessObjects;
+using BusinessObjects.BusinessObjects;
 using BusinessObjects.DTOs;
 using BusinessObjects.DTOs.Request;
 using BusinessObjects.DTOs.Response;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,24 +30,13 @@ namespace DataAccess
                 }
             }
         }
-
-        public IEnumerable<TopicResponse> GetTopics()
+        public IEnumerable<Topic> GetTopics()
         {
-            var topics = new List<TopicResponse>();
+            var topics = new List<Topic>();
             try
             {
                 using var context = new CPRContext();
-                topics = context.TopicOfLecturers.Select(x => new TopicResponse
-                {
-                    Id = x.Id,
-                    Topic = context.Topics.SingleOrDefault(t => t.Id == x.TopicId),
-                    Name = x.Topic.Name,
-                    Description = x.Topic.Description,
-                    Status = x.Topic.Status,
-                    SemesterCode = x.Topic.Semester.Code,
-                    SpecializationName = x.Topic.Specialization.Name,
-                    SuperLecturerEmail = context.TopicOfLecturers.Where(c => c.Id == x.LecturerId).SingleOrDefault(l => l.IsSuperLecturer.Equals(true)).Lecturer.Email,
-                }).ToList();
+                topics = context.Topics.Include(a=>a.Specialization).Include(a=>a.Semester).Include(c=>c.TopicOfLecturers).ToList();
             }
             catch (Exception ex)
             {
@@ -53,7 +44,6 @@ namespace DataAccess
             }
             return topics;
         }
-
         public Topic GetTopicByName(string? name)
         {
             var topic = new Topic();
@@ -84,45 +74,35 @@ namespace DataAccess
             return topic;
         }
 
-        public void CreateTopic(TopicRequest topic)
+        public void CreateTopic(Topic topic)
         {
             try
             {
-                Topic topic2 = new Topic();
-                topic2 = GetTopicByName(topic.Name);
+
                 using var context = new CPRContext();              
-                if (topic2 == null)
+               context.Topics.Add(topic);
+                context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public Topic Update(Topic topic, int id)
+        {
+            try
+            {
+                Topic _topic = GetTopicById(id);
+                if (_topic != null)
                 {
-                    var topic1 = new Topic();
-                    topic1.Name = topic.Name;
-                    topic1.Description = topic.Description;
-                    topic1.Status = true;
-                    topic1.Semester = context.Semesters.SingleOrDefault(s => s.Code.Equals(topic.SemesterCode));
-                    topic1.SemesterId = context.Semesters.SingleOrDefault(s => s.Code.Equals(topic.SemesterCode)).Id;
-                    topic1.Specialization = context.Specializations.SingleOrDefault(s => s.Name.Equals(topic.SpecializationName));
-                    topic1.SpecializationId = context.Specializations.SingleOrDefault(s => s.Name.Equals(topic.SpecializationName)).Id;
-
-                    var topicOfLecturer = new TopicOfLecturer();
-                    topicOfLecturer.Lecturer = context.Accounts.SingleOrDefault(s => s.Email.Equals(topic.SuperLecturerEmail));
-                    topicOfLecturer.LecturerId = context.Accounts.SingleOrDefault(s => s.Email.Equals(topic.SuperLecturerEmail)).Id;
-                    topicOfLecturer.IsSuperLecturer = true;
-                    topicOfLecturer.Status = true;
-                    topicOfLecturer.Topic = topic1;
-                    topicOfLecturer.TopicId = topic1.Id;
-
-                    topic1.TopicOfLecturers.Add(topicOfLecturer);
-                    context.Topics.Add(topic1);
+                    using var context = new CPRContext();
+                    context.Topics.Update(topic);
+                    context.SaveChanges();
+                    return topic;
                 }
                 else
                 {
-                    /*
-                    TopicOfLecturer t = new TopicOfLecturer();
-                    t.TopicId = topic2.Id;
-                    t.IsSuperLecturer= false;
-                    t.LecturerId = context.Accounts.SingleOrDefault(s => s.Email.Equals(topic.SuperLecturerEmail)).Id;
-                    topic2.TopicOfLecturers.Add(t);
-                    */
-                    throw new Exception("The Topic is already exist.");
+                    throw new Exception("The topic does not already exist.");
                 }
             }
             catch (Exception ex)
@@ -130,7 +110,6 @@ namespace DataAccess
                 throw new Exception(ex.Message);
             }
         }
-
         public void UpdateStatus(int Id)
         {
             try

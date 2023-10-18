@@ -1,4 +1,5 @@
 ﻿using BusinessObjects;
+using BusinessObjects.BusinessObjects;
 using BusinessObjects.DTOs.Request;
 using BusinessObjects.DTOs.Response;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +29,21 @@ namespace DataAccess
                 }
             }
         }
-
+        public IEnumerable<Subject> GetSubjects()
+        {
+            var subjects = new List<Subject>();
+            try
+            {
+                using var context = new CPRContext();
+                subjects = context.Subjects.Include(c=>c.Specialization).ToList();
+               
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return subjects;
+        }
         public IEnumerable<SubjectResponse> GetSubjectIsPrerequisite(int id)
         {
             var subjects = new List<SubjectResponse>();
@@ -107,27 +122,13 @@ namespace DataAccess
             return subject;
         }
 
-        public void Create(SubjectRequest s)
+        public void Create(Subject s)
         {
             try
             {
-                var _s = new Subject();
-                _s = GetSubjectByCode(s.Code);
                 using var context = new CPRContext();
-                if (_s == null)
-                {
-                    var subject = new Subject();
-                    subject.Code = s.Code;
-                    subject.Name = s.Name;
-                    subject.IsPrerequisite = s.IsPrerequisite;
-                    subject.SpecializationId = s.SpecializationId;
-                    subject.Status = true;
-                    context.Subjects.Add(subject);
-                }
-                else
-                {
-                    throw new Exception("The Subject is already exist.");
-                }
+                context.Subjects.Add(s);  
+                context.SaveChanges();
             }
             catch (Exception ex)
             {

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BusinessObjects
+namespace BusinessObjects.BusinessObjects
 {
     public partial class Specialization
     {
         public Specialization()
         {
+            Accounts = new HashSet<Account>();
             Subjects = new HashSet<Subject>();
             Topics = new HashSet<Topic>();
         }
@@ -17,6 +18,7 @@ namespace BusinessObjects
         public string? Description { get; set; }
         public bool? Status { get; set; }
 
+        public virtual ICollection<Account> Accounts { get; set; }
         public virtual ICollection<Subject> Subjects { get; set; }
         public virtual ICollection<Topic> Topics { get; set; }
     }

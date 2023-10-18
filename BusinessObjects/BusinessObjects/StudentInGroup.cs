@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BusinessObjects
+namespace BusinessObjects.BusinessObjects
 {
     public partial class StudentInGroup
     {
@@ -10,10 +10,10 @@ namespace BusinessObjects
         public bool? Status { get; set; }
         public string? Role { get; set; }
         public string? Description { get; set; }
-        public int? GroupId { get; set; }
-        public int? StudentId { get; set; }
+        public int GroupId { get; set; }
+        public int StudentId { get; set; }
 
-        public virtual GroupProject? Group { get; set; }
-        public virtual Account? Student { get; set; }
+        public virtual GroupProject Group { get; set; } = null!;
+        public virtual Account Student { get; set; } = null!;
     }
 }
