@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRN231.CPR.API", "PRN231.CPR.API\PRN231.CPR.API.csproj", "{8A85EE76-F8EB-4CC7-B4C6-252ED095B0AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PRN231.CPR.API", "PRN231.CPR.API\PRN231.CPR.API.csproj", "{8A85EE76-F8EB-4CC7-B4C6-252ED095B0AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessObjects", "BusinessObjects\BusinessObjects.csproj", "{326FC817-154F-49AB-879E-347EE1208A78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessObjects", "BusinessObjects\BusinessObjects.csproj", "{326FC817-154F-49AB-879E-347EE1208A78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{A003326F-2AD4-449B-93A6-42B9236300BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{A003326F-2AD4-449B-93A6-42B9236300BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{713B06FF-374C-4F1F-81A0-639247B2E512}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{713B06FF-374C-4F1F-81A0-639247B2E512}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRN231.CPR.Page", "PRN231.CPR.Page\PRN231.CPR.Page.csproj", "{F97279F7-BD01-49BE-BE4A-AF747ED9D848}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PRN231.CPR.Page", "PRN231.CPR.Page\PRN231.CPR.Page.csproj", "{F97279F7-BD01-49BE-BE4A-AF747ED9D848}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

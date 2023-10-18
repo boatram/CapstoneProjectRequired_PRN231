@@ -1,6 +1,8 @@
 ﻿using BusinessObjects;
+using BusinessObjects.BusinessObjects;
 using BusinessObjects.DTOs.Request;
 using BusinessObjects.DTOs.Response;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +17,6 @@ namespace Repository
         void Create(SemesterRequest semester);
         Semester GetSemesterByID(int? Id);
         IEnumerable<SemesterResponse> GetSemesters();
+        Task<List<StudentInSemesterResponse>> CreateStudentInSemester(IFormFile file);
     }
 }

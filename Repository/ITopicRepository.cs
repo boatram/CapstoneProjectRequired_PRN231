@@ -1,6 +1,8 @@
 ﻿using BusinessObjects.DTOs;
 using BusinessObjects.DTOs.Request;
 using BusinessObjects.DTOs.Response;
+using Microsoft.AspNetCore.Http;
+using Repository.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +13,8 @@ namespace Repository
 {
     public interface ITopicRepository
     {
-        IEnumerable<TopicResponse> GetTopics();
-        void CreateTopic(TopicRequest topic);
+        Task<IEnumerable<TopicResponse>> GetTopics();
+        Task<List<TopicResponse>> Create(IFormFile file);
         void UpdateStatus(int Id);
     }
 }

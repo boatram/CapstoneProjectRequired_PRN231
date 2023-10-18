@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://kit.fontawesome.com/64d58efce2.js"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <title>Login</title>
+</head>
+<body>
+    <div class="nav-page">
+    <nav class="navbar navbar-expand-lg navbar-dark bg">
+        <span class="navbar-brand">
+            <img class="nav-img" src="https://feid.fpt.edu.vn/FPT_Education_logo.svg" />
+            Tổ Chức Giáo Dục FPT
+        </span>
+    </nav>
+    </div>
+    <div class="form-bg">
+        <div class="container body-container">
+            <div>
+                <div class="form-container">
+                    <div class="left-content">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+                             class="sub-title" alt="Phone image">
+                    </div>
+                    <div class="right-content">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
