@@ -105,7 +105,7 @@ namespace Repository
                                     SubjectId = a.SubjectId,
                                     SemesterCode = a.Semester.Code,
                                     StudentCode = a.Student.Code,
-                                    Subject = a.Subject
+                                    Subject = _mapper.Map<SubjectResponse>(a.Subject)
                                 }).ToList();
                             }
                         }
