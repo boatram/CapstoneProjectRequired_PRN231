@@ -15,7 +15,7 @@ namespace BusinessObjects.DTOs.Response
         public int? SubjectId { get; set; }
         public int? SemesterId { get; set; }
         public string StudentCode { get; set; }
-        public Subject Subject { get; set; }
+        public SubjectResponse Subject { get; set; }
         public string SemesterCode { get; set; }
     }
 }

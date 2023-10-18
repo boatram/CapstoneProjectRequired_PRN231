@@ -32,7 +32,7 @@ namespace DataAccess
             try
             {
                 using var context = new CPRContext();
-                accounts = context.StudentInSemesters.Include(c => c.Semester).Include(c=>c.Subject).Include(c=>c.Student).ToList();
+                accounts = context.StudentInSemesters.Include(c => c.Semester).Include(c=>c.Subject).Include(c=>c.Student).Include(c=>c.Subject.Specialization).ToList();
 
             }
             catch (Exception ex)
