@@ -74,7 +74,7 @@ namespace Repository
                                     {
                                         throw new CrudException(HttpStatusCode.BadRequest, "Email has already !!!", "");
                                     }
-                                    if(!Regex.IsMatch(cus.Email, "^[a-zA-Z0-9._%+-]+@(fpt\\.edu\\.vn|fe\\.edu\\.vn|gmail\\.com)$"))
+                                    if(!Regex.IsMatch(account.Email, "^[a-zA-Z0-9._%+-]+@(fpt\\.edu\\.vn|fe\\.edu\\.vn|gmail\\.com)$"))
                                         throw new CrudException(HttpStatusCode.BadRequest, "Email invalid !!!", "");
                                     customer.Status = true;
                                     if (choice.ToString().Equals("Student"))
