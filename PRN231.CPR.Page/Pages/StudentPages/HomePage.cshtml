@@ -1,0 +1,381 @@
+﻿@page
+@model PRN231.CPR.Page.Pages.StudentPages.HomePageModel
+@{
+    Layout = "../Shared/_LayoutHome.cshtml";
+    
+}
+
+
+    <main>
+
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" asp-page="/StudentPage/HomePage" >
+                <img class="logo-img" src="https://feid.fpt.edu.vn/FPT_Education_logo.svg"
+                </a>
+
+                <div class="d-lg-none ms-auto me-4">
+                    <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
+                </div>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-lg-5 me-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="#section_1">Home</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="#section_2">Browse Topics</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="#section_3">Create Group Project</a>
+                        </li>
+
+                       
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
+
+                            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                                <li><a class="dropdown-item" href="topics-listing.html">Topics Listing</a></li>
+
+                                <li><a class="dropdown-item" href="contact.html">Contact Form</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="d-none d-lg-block">
+                        <a href="#top" class="">
+                        <img class="icon-img" src="https://cdn-icons-png.flaticon.com/512/56/56805.png" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+        <section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-8 col-12 mx-auto">
+                        <h1 class="text-white text-center">Capstone Project Supporting</h1>
+
+                        <h6 class="text-center">platform for student in fpt university</h6>
+
+                        <form method="get" class="custom-form mt-4 pt-2 mb-lg-0 mb-5" role="search">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text bi-search" id="basic-addon1">
+
+                                </span>
+
+                                <input name="keyword" type="search" class="form-control" id="keyword" placeholder="Searching topic ...." aria-label="Search">
+
+                                <button type="submit" class="form-control">Search</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <section class="featured-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                <img src="https://bzhomevn.com/wp-content/uploads/2022/03/Logo_Dai_hoc_FPT.png" />
+
+                </div>
+            </div>
+        </section>
+
+
+        <section class="explore-section section-padding" id="section_2">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-12 text-center">
+                        <h2 class="mb-4">Browse Topics</h1>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="design-tab" data-bs-toggle="tab" data-bs-target="#design-tab-pane" type="button" role="tab" aria-controls="design-tab-pane" aria-selected="true">Software Engineering</button>
+                        </li>
+
+                        <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="marketing-tab" data-bs-toggle="tab" data-bs-target="#marketing-tab-pane" type="button" role="tab" aria-controls="marketing-tab-pane" aria-selected="false">Information Assurance</button>
+                        </li>
+
+                        <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="finance-tab" data-bs-toggle="tab" data-bs-target="#finance-tab-pane" type="button" role="tab" aria-controls="finance-tab-pane" aria-selected="false">Artificial Intelligence</button>
+                        </li>
+
+                        <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="music-tab" data-bs-toggle="tab" data-bs-target="#music-tab-pane" type="button" role="tab" aria-controls="music-tab-pane" aria-selected="false">Information System</button>
+                        </li>
+
+                        <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="education-tab" data-bs-toggle="tab" data-bs-target="#education-tab-pane" type="button" role="tab" aria-controls="education-tab-pane" aria-selected="false">Digital Art & Design</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-12">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="design-tab-pane" role="tabpanel" aria-labelledby="design-tab" tabindex="0">
+                                <div class="row">
+                                    
+                                        <div class="custom-block bg-white shadow-lg">
+                                            <a href="topics-detail.html">
+                                                <div class="d-flex">
+                                                    <div>
+                                                    <h5 class="mb-2">Software Engineering</h5>
+
+                                                <p class="mb-0">View all topics in software engineering majors</p>
+                                                    </div>
+
+                                                    <span class="badge bg-design rounded-pill ms-auto">14</span>
+                                                </div>
+                                        <img src="https://qnuni.fpt.edu.vn/Data/Sites/1/media/16-12-2019_edit_images/ktpm2.png" alt="">
+
+                                            </a>
+                                        </div>
+                                    
+
+                                   
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="marketing-tab-pane" role="tabpanel" aria-labelledby="marketing-tab" tabindex="0">
+                                <div class="row">
+                                    <div class="custom-block bg-white shadow-lg">
+                                    <a href="topics-detail.html">
+                                        <div class="d-flex">
+                                            <div>
+                                                <h5 class="mb-2">Information Assurance</h5>
+
+                                                <p class="mb-0">View all topics in Information Assurance majors</p>
+                                            </div>
+
+                                            <span class="badge bg-design rounded-pill ms-auto">14</span>
+                                        </div>
+                                        <img src="https://hanoi.fpt.edu.vn/wp-content/uploads/2020/04/1-4-e1587109412964.png" />
+                                    </a>
+                                </div>
+                             
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="finance-tab-pane" role="tabpanel" aria-labelledby="finance-tab" tabindex="0">
+                            <div class="row">
+                                <div class="custom-block bg-white shadow-lg">
+                                    <a href="topics-detail.html">
+                                        <div class="d-flex">
+                                            <div>
+                                                <h5 class="mb-2">Artificial Intelligence</h5>
+
+                                                <p class="mb-0">View all topics in v majors</p>
+                                            </div>
+
+                                            <span class="badge bg-design rounded-pill ms-auto">14</span>
+                                        </div>
+                                        <img src="https://daihoc.fpt.edu.vn/wp-content/uploads/2019/03/tri-tue-nhan-tao-AI.jpg" />
+                                    </a>
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="music-tab-pane" role="tabpanel" aria-labelledby="music-tab" tabindex="0">
+                                <div class="row">
+                                <div class="custom-block bg-white shadow-lg">
+                                    <a href="topics-detail.html">
+                                        <div class="d-flex">
+                                            <div>
+                                                <h5 class="mb-2">Information System</h5>
+
+                                                <p class="mb-0">View all topics in Information System majors</p>
+                                            </div>
+
+                                            <span class="badge bg-design rounded-pill ms-auto">14</span>
+                                        </div>
+                                        <img src="https://vnpro.vn/upload/user/images/Logo%20Doanh%20Nghi%E1%BB%87p/32f205c2-d50e-11e7-b5b4-2e995a9a3302.jpg" />
+                                    </a>
+                                </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="education-tab-pane" role="tabpanel" aria-labelledby="education-tab" tabindex="0">
+                                <div class="row">
+                                <div class="custom-block bg-white shadow-lg">
+                                    <a href="topics-detail.html">
+                                        <div class="d-flex">
+                                            <div>
+                                                <h5 class="mb-2">Digital Art & Design</h5>
+
+                                                <p class="mb-0">View all topics in Digital Art & Design majors</p>
+                                            </div>
+
+                                            <span class="badge bg-design rounded-pill ms-auto">14</span>
+                                        </div>
+                                        <img src="https://hcmuni.fpt.edu.vn/Data/Sites/1/News/1754/thietkemythuatso1.jpg" />
+                                    </a>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+        </section>
+
+
+        <section class="timeline-section section-padding" id="section_3">
+            <div class="section-overlay"></div>
+
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-12 text-center">
+                        <h2 class="text-white mb-4">How does it work?</h1>
+                    </div>
+
+                    <div class="col-lg-10 col-12 mx-auto">
+                        <div class="timeline-container">
+                            <ul class="vertical-scrollable-timeline" id="vertical-scrollable-timeline">
+                                <div class="list-progress">
+                                    <div class="inner"></div>
+                                </div>
+
+                                <li>
+                                    <h4 class="text-white mb-3">Search your favourite topic</h4>
+
+                                <p class="text-white">Search for topics with requirements that match your major</p>
+
+                                    <div class="icon-holder">
+                                    <h3>1</h3>
+                                </div>
+                                </li>
+
+                                <li>
+                                    <h4 class="text-white mb-3">Create group project</h4>
+
+                                <p class="text-white"> Create a group with the selected topic, then add group members (3-5 people)</p>
+
+                                    <div class="icon-holder">
+                                       <h3>2</h3>
+                                    </div>
+                                </li>
+
+                                <li>
+                                <h4 class="text-white mb-3">Wait for approval from the management system</h4>
+
+                                <p class="text-white">
+                                    The system will check the requirements as well as priority topics for approval for your group
+                                </p>
+
+                                    <div class="icon-holder">
+                                    <h3>3</h3>
+                                </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-12 text-center mt-5">
+                        <p class="text-white">
+                        Have not a group project yet
+                        <a href="#" class="btn custom-btn custom-border-btn ms-3">Create group now</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+       
+    </main>
+
+    <footer class="site-footer section-padding">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-3 col-12 mb-4 pb-2">
+                <a class="navbar-brand" asp-page="/StudentPage/HomePage">
+                    <img class="logo-img" src="https://feid.fpt.edu.vn/FPT_Education_logo.svg"
+                    </a>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-6">
+                    <h6 class="site-footer-title mb-3">Resources</h6>
+
+                    <ul class="site-footer-links">
+                        <li class="site-footer-link-item">
+                            <a href="#" class="site-footer-link">Home</a>
+                        </li>
+
+                        <li class="site-footer-link-item">
+                            <a href="#" class="site-footer-link">How it works</a>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-6 mb-4 mb-lg-0">
+                    <h6 class="site-footer-title mb-3">Information</h6>
+
+                    <p class="text-white d-flex mb-1">
+                        <a href="tel: 0835537718" class="site-footer-link">
+                           08-3553-7718
+                        </a>
+                    </p>
+
+                    <p class="text-white d-flex">
+                        <a href="mailto:info@company.com" class="site-footer-link">
+                            info@company.com
+                        </a>
+                    </p>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-12 mt-4 mt-lg-0 ms-auto">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            English
+                        </button>
+
+                        <ul class="dropdown-menu">
+                            <li><button class="dropdown-item" type="button">Thai</button></li>
+
+                            <li><button class="dropdown-item" type="button">Myanmar</button></li>
+
+                            <li><button class="dropdown-item" type="button">Arabic</button></li>
+                        </ul>
+                    </div>
+
+                    <p class="copyright-text mt-lg-5 mt-4">
+                        Copyright © 2048 Topic Listing Center. All rights reserved.
+                       
+                    </p>
+
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+
