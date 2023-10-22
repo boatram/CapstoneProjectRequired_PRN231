@@ -24,6 +24,7 @@ namespace BusinessObjects.DTOs.Response
         public DateTime? DateOfBirth { get; set; }
         public string? Token { get; set; }
         public int? SpecializationId { get; set; }
+        public string? RefreshToken { get; set; }
         public SpecializationResponse Specialization { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace PRN231.CPR.Page.Pages
             if(s != null) Message = s;
             return Page();
         }
-        public IActionResult OnGetLoginGoogle(string email)
+        public IActionResult OnGetGoogle(string email)
         {
            return RedirectPermanent(GoogleApiHelper.GetOauthUri(email));
             
