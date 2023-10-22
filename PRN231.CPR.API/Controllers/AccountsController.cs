@@ -69,23 +69,20 @@ namespace PRN231.CPR.API.Controllers
             var rs = await accountRepository.CreateMailMessage(email);
             return Ok(rs);
         }
-        /// <summary>
-        /// Sign Up account of account
-        /// </summary>
-        /// <param name="account"></param>
-        /// <returns></returns>
+
+        [HttpPost("token-verification")]
+        public async Task<ActionResult<AccountResponse>> VerifyAndGenerateToken(TokenRequest request)
+        {
+            var rs = await accountRepository.VerifyAndGenerateToken(request);
+            return Ok(rs);
+        }
         [AllowAnonymous]
         [HttpPost()]
         public async Task<ActionResult<AccountResponse>> Post(IFormFile file, ExcelChoice choice)
         {
-            var rs = await accountRepository.CreateAccount(file,choice);
+            var rs = await accountRepository.CreateAccount(file, choice);
             return Ok(rs);
         }
-        /// <summary>
-        /// Login by phone and password
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("authentication")]
         public async Task<ActionResult<AccountResponse>> Login([FromBody] LoginRequest model)
@@ -93,11 +90,6 @@ namespace PRN231.CPR.API.Controllers
             var rs = await accountRepository.Login(model);
             return Ok(rs);
         }
-        /// <summary>
-        /// Login by googleId
-        /// </summary>
-        /// <param name="googleId"></param>
-        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("google-authentication")]
         public async Task<ActionResult<AccountResponse>> LoginGoogle([FromQuery] string googleId)
@@ -105,11 +97,6 @@ namespace PRN231.CPR.API.Controllers
             var rs = await accountRepository.LoginGoogle(googleId);
             return Ok(rs);
         }
-        /// <summary>
-        /// Reset password when forgot password
-        /// </summary>
-        /// <param name="resetPassword"></param>
-        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("forgotten-password")]
         public async Task<ActionResult<AccountResponse>> ResetPassword([FromQuery] ResetPasswordRequest resetPassword)

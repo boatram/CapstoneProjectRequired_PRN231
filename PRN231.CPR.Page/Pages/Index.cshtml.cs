@@ -29,7 +29,7 @@ namespace PRN231.CPR.Page.Pages
             if(s != null) Message = s;
             return Page();
         }
-        public IActionResult OnGetLoginGoogle(string email)
+        public IActionResult OnGetGoogle(string email)
         {
            return RedirectPermanent(GoogleApiHelper.GetOauthUri(email));
             
@@ -53,8 +53,8 @@ namespace PRN231.CPR.Page.Pages
                     string role = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == "role")?.Value;
                     if (role.Equals("admin"))
                         return RedirectToPage("./AdminDashboard");
-                    else                       
-                        return RedirectToPage("./HomePage");
+                    else
+                        return RedirectToPage("./StudentPages/HomePage");
                 }
                 else
                 {
@@ -70,7 +70,7 @@ namespace PRN231.CPR.Page.Pages
                 Message = "Your account is not allowed to log into the system";
                 return Page();
             }
-            return Page();
+           
         }
     }
 }

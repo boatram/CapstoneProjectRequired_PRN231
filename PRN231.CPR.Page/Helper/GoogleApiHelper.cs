@@ -25,7 +25,7 @@ namespace PRN231.CPR.Page.Helper
 
         public static string ClientSecret = "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";
 
-        public static string RedirectUri = "https://localhost:7024/HomePage";
+        public static string RedirectUri = "https://localhost:7024/StudentPages/HomePage";
 
         public static string OauthUri = "https://accounts.google.com/o/oauth2/v2/auth?";
         public static string TokenUri = "https://accounts.google.com/o/oauth2/token";

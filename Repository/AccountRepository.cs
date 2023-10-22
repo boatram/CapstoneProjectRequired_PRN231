@@ -5,9 +5,11 @@ using BusinessObjects.BusinessObjects;
 using BusinessObjects.DTOs.Request;
 using BusinessObjects.DTOs.Response;
 using DataAccess;
+using Firebase.Auth;
 using Google.Apis.Auth;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
@@ -152,9 +154,11 @@ namespace Repository
                                 throw new CrudException(HttpStatusCode.BadRequest, "User Not Found", "");
                             else
                             {
-                                var rs=_mapper.Map<AccountResponse>(cus);
-                                rs.Token = GenerateJwtToken(cus);
-                                return rs;
+                                var user = _mapper.Map<Account, AccountResponse>(cus);
+                                var a = GenerateJwtToken(cus);
+                                user.Token = a.AccessToken;
+                                user.RefreshToken = a.RefreshToken;
+                                return user;
                             }
                         }
                     }
@@ -254,7 +258,9 @@ namespace Repository
                     if (user.Status == false) throw new CrudException(HttpStatusCode.BadRequest, "Your account is block", "");
                 }
                 var cus = _mapper.Map<Account, AccountResponse>(user);
-                cus.Token = GenerateJwtToken(user);
+                var acc = GenerateJwtToken(user);
+                cus.Token = acc.AccessToken;
+                cus.RefreshToken=acc.RefreshToken;
                 return cus;
             }
             catch (CrudException ex)
@@ -266,7 +272,49 @@ namespace Repository
                 throw new CrudException(HttpStatusCode.BadRequest, "Progress Error!!!", ex.InnerException?.Message);
             }
         }
-       
+       public async Task<AccountResponse>VerifyAndGenerateToken(TokenRequest request)
+        {
+            try
+            {
+                var jwtTokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(_config["ApiSetting:Secret"]);
+                TokenValidationParameters tokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                };
+                var tokenInVerification = jwtTokenHandler.ValidateToken(request.Token, tokenValidationParameters, out var tokenValidation);
+                if (tokenValidation is JwtSecurityToken securityToken)
+                {
+                    var rs=securityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,StringComparison.InvariantCultureIgnoreCase);
+                    if (rs == false) return null;
+                }
+                var utcExpiredDate = long.Parse(tokenInVerification.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Exp).Value);
+                var dateTimeVal = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+                var expiredDate = dateTimeVal.AddSeconds(utcExpiredDate);
+                if (expiredDate > DateTime.Now)  throw new CrudException(HttpStatusCode.BadRequest, "Expired token","");
+                var storedToken = AccountDAO.Instance.GetAccounts().Where(a => a.Token == request.RefreshToken).FirstOrDefault();
+                if(storedToken == null) throw new CrudException(HttpStatusCode.BadRequest, "Invalid Token", "");
+                var jti=tokenInVerification.Claims.FirstOrDefault(x=>x.Type==JwtRegisteredClaimNames.Jti).Value;
+                if(storedToken.JwtId!= jti) throw new CrudException(HttpStatusCode.BadRequest, "Invalid Token", "");
+                if(storedToken.ExpiredDate < DateTime.UtcNow) throw new CrudException(HttpStatusCode.BadRequest, "Expired Token", "");
+                var cus = _mapper.Map<Account, AccountResponse>(storedToken);
+                var acc = GenerateJwtToken(storedToken);
+                cus.Token = acc.AccessToken;
+                cus.RefreshToken = acc.RefreshToken;
+                return cus;
+            }
+            catch (CrudException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw new CrudException(HttpStatusCode.BadRequest, "Progress Error!!!", ex.InnerException?.Message);
+            }
+        }
 
         public async Task<AccountResponse> UpdateAccount(int accountId, UpdateAccountRequest request)
         {
@@ -372,7 +420,7 @@ namespace Repository
                 return computedHash.SequenceEqual(passwordHash);
             }
         }
-        private string GenerateJwtToken(Account? customer)
+        private dynamic GenerateJwtToken(Account? customer)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_config["ApiSetting:Secret"]);
@@ -385,6 +433,7 @@ namespace Repository
                 new Claim(ClaimTypes.Role, "lecturer"),
                 new Claim(ClaimTypes.Name , customer.Name),
                 new Claim(ClaimTypes.Email , customer.Email),
+                new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.MobilePhone , customer.Phone),
                  });
             }
@@ -396,11 +445,28 @@ namespace Repository
                  new Claim(ClaimTypes.Name , customer.Name)
                 });
             }
-            tokenDescriptor.Expires = DateTime.UtcNow.AddYears(1);
+            tokenDescriptor.Expires = DateTime.UtcNow.AddSeconds(1);
             tokenDescriptor.SigningCredentials = new(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
             var token = tokenHandler.CreateToken(tokenDescriptor);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var rs=new JwtSecurityTokenHandler().WriteToken(token);
+            customer.JwtId=token.Id;
+            customer.Token =GenerateRefreshToken();
+            customer.AddedDate= DateTime.UtcNow;
+            customer.ExpiredDate= DateTime.UtcNow.AddMonths(6);
+            AccountDAO.Instance.Update(customer, customer.Id);
+            return new
+            {
+                AccessToken = rs,
+                RefreshToken = customer.Token
+            };
+            
+        }
+        private string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[64];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+            return Convert.ToBase64String(randomNumber);
         }
 
         public async Task<List<AccountResponse>> GetAccounts()

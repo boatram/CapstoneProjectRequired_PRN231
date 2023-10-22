@@ -25,6 +25,10 @@ namespace BusinessObjects.BusinessObjects
         public string? Avatar { get; set; }
         public bool? Status { get; set; }
         public int SpecializationId { get; set; }
+        public string? Token { get; set; }
+        public string? JwtId { get; set; }
+        public DateTime? AddedDate { get; set; }
+        public DateTime? ExpiredDate { get; set; }
 
         public virtual Role? Role { get; set; }
         public virtual Specialization Specialization { get; set; } = null!;

@@ -22,6 +22,7 @@ namespace Repository
         Task<List<StudentInSemesterResponse>> GetAccountsInSemester();
         Task<AccountResponse> GetAccountById(int id);
         Task<AccountResponse> LoginGoogle(string data);
+        Task<AccountResponse> VerifyAndGenerateToken(TokenRequest request);
        Task<AccountResponse> UpdatePass(ResetPasswordRequest request);
         Task<AccountResponse> UpdateAccount(int accountId, UpdateAccountRequest request);
     }
