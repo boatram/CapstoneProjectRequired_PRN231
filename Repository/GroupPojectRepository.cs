@@ -3,6 +3,7 @@ using BusinessObjects.BusinessObjects;
 using BusinessObjects.DTOs.Request;
 using BusinessObjects.DTOs.Response;
 using DataAccess;
+using Hangfire;
 using OfficeOpenXml.Style;
 using Repository.Exceptions;
 using Repository.Helpers;
@@ -141,6 +142,16 @@ namespace Repository
                 throw new CrudException(HttpStatusCode.BadRequest, "Create group Error!!!", ex?.Message);
             }
         }
+        public async Task AutoUpdateStatusTopic(int topicId,int semesterId)
+        {
+            var group = TopicOfGroupDAO.Instance.GetTopicOfGroups().Where(a => a.TopicId == topicId && a.Topic.SemesterId == semesterId);
+            if (group != null)
+            {
+                if(group.FirstOrDefault().Status==null)
+                TopicOfGroupDAO.Instance.Update(group.FirstOrDefault(), group.FirstOrDefault().TopicId);
+
+            }              
+        }
 
         public async Task<GroupProjectResponse> CreatTopicOfGroup(int groupId, int topicId)
         {
@@ -161,15 +172,18 @@ namespace Repository
                 if( topic ==null )
                     throw new CrudException(HttpStatusCode.NotFound, $"Not found topic with id{topicId.ToString()} in this semester", "");
                 if (TopicOfGroupDAO.Instance.GetTopicOfGroups().Where(a=>a.TopicId==topicId && a.Topic.SemesterId == topic.SemesterId && a.Status == true).SingleOrDefault() != null)
-                    throw new CrudException(HttpStatusCode.NotFound, "Topc has been already registered for this semester", "");
+                    throw new CrudException(HttpStatusCode.BadRequest, "Topc has been already registered for this semester", "");
                 if (TopicOfGroupDAO.Instance.GetTopicOfGroups().Where(a => a.GroupProjectId == groupId && a.Topic.SemesterId==topic.SemesterId && a.Status==true || a.GroupProjectId == groupId && a.Topic.SemesterId == topic.SemesterId && a.Status==null).SingleOrDefault() !=null)
-                    throw new CrudException(HttpStatusCode.NotFound, "You have already registered for the topic for this semester", "");
+                    throw new CrudException(HttpStatusCode.BadRequest, "You have already registered for the topic for this semester", "");
                 TopicOfGroup topicOfGroup = new TopicOfGroup();
                 topicOfGroup.GroupProjectId = groupId;
                 topicOfGroup.TopicId =topic.Id ;
                 topicOfGroup.Status = null;
                 group.TopicOfGroups.Add(topicOfGroup);
                 GroupDAO.Instance.AddTopicOfGroup(topicOfGroup);
+                BackgroundJob.Schedule(() =>
+                    AutoUpdateStatusTopic(topicId,topic.SemesterId),
+                            TimeSpan.FromMinutes(2));
                 var topicResponse = mapper.Map<TopicOfGroupResponse>(topicOfGroup);
                 topicResponse.SemesterCode = topic.SemesterCode;
                 topicResponse.TopicName = topic.Name;
@@ -425,9 +439,15 @@ namespace Repository
                 {
                     if(t.TopicOfGroups!= null && t.TopicOfGroups.Count() > 0)
                     {
-                        var id = t.TopicOfGroups.Where(a => a.SemesterCode == code && a.Status == true).SingleOrDefault().GroupProjectId;
-                        if (id != null) groups.Add(GetGroupProjectById((int)id).Result);
-                    }                }              
+                        var group = t.TopicOfGroups.Where(a => a.SemesterCode == code && a.Status != null).ToList();
+                        if (group != null && group.Count() > 0)
+                        {
+                            var id = group.Where(a => a.Status == true).SingleOrDefault().GroupProjectId;
+                            if (id != null)
+                                groups.Add(GetGroupProjectById((int)id).Result);
+                        }
+                    }                
+                }              
                 if(groups.Count == 0) groups = list.Where(a => a.TopicOfGroups ==null).ToList();
                 return mapper.Map<List<GroupProjectResponse>>(groups);
             }

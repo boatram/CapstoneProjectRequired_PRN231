@@ -1,10 +1,12 @@
 using BusinessObjects.DTOs.Response;
 using Google.Apis.Auth.AspNetCore3;
+using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.OData;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OData.ModelBuilder;
 using Microsoft.OpenApi.Models;
+using MuTote.API.AppStart;
 using Newtonsoft.Json;
 using PRN231.CPR.API.Mapper;
 using Repository;
@@ -74,6 +76,7 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+builder.Services.ConfigureHangfireServices(builder.Configuration);
 //start JWT
 var key = builder.Configuration.GetValue<string>("ApiSetting:Secret");
 builder.Services.AddAuthentication(x =>
@@ -95,7 +98,9 @@ builder.Services.AddAuthentication(x =>
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
             ValidateIssuer = false,
+            RequireSignedTokens = true,
             ValidateAudience = false,
+            ClockSkew = TimeSpan.Zero
         };
     });
 //end JWT
@@ -111,7 +116,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseHangfireDashboard();
 app.MapControllers();
 
 app.Run();

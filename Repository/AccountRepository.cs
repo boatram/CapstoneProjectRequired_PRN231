@@ -78,6 +78,13 @@ namespace Repository
                                     }
                                     if(!Regex.IsMatch(account.Email, "^[a-zA-Z0-9._%+-]+@(fpt\\.edu\\.vn|fe\\.edu\\.vn|gmail\\.com)$"))
                                         throw new CrudException(HttpStatusCode.BadRequest, "Email invalid !!!", "");
+                                    #region checkPhone
+                                    var checkPhone = CheckVNPhone(account.Phone);
+                                    if (!checkPhone)                                    
+                                    {
+                                        throw new CrudException(HttpStatusCode.BadRequest, "Wrong Phone", "");
+                                    }
+                                    #endregion
                                     customer.Status = true;
                                     if (choice.ToString().Equals("Student"))
                                         customer.RoleId = 1;                                                                             
@@ -113,6 +120,17 @@ namespace Repository
             {
                 throw new CrudException(HttpStatusCode.BadRequest, "Create Account Error!!!", ex?.Message);
             }
+        }
+        public static bool CheckVNPhone(string phoneNumber)
+        {
+            string strRegex = @"(^(0)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$)";
+            Regex re = new Regex(strRegex);
+            if (re.IsMatch(phoneNumber))
+            {
+                return true;
+            }
+            else
+                return false;
         }
         public async Task<AccountResponse> LoginGoogle(string code)
         {
@@ -430,7 +448,7 @@ namespace Repository
                 tokenDescriptor.Subject = new ClaimsIdentity(new Claim[]
                  {
                 new Claim(ClaimTypes.NameIdentifier, customer.Id.ToString()),
-                new Claim(ClaimTypes.Role, "lecturer"),
+                new Claim(ClaimTypes.Role, customer.Role.Name),
                 new Claim(ClaimTypes.Name , customer.Name),
                 new Claim(ClaimTypes.Email , customer.Email),
                 new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
@@ -445,7 +463,7 @@ namespace Repository
                  new Claim(ClaimTypes.Name , customer.Name)
                 });
             }
-            tokenDescriptor.Expires = DateTime.UtcNow.AddSeconds(1);
+            tokenDescriptor.Expires = DateTime.Now.AddMinutes(2);
             tokenDescriptor.SigningCredentials = new(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var rs=new JwtSecurityTokenHandler().WriteToken(token);

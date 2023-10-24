@@ -72,6 +72,14 @@
               "target": "Package",
               "version": "[1.62.1, )"
             },
+            "Hangfire": {
+              "target": "Package",
+              "version": "[1.8.6, )"
+            },
+            "Hangfire.MemoryStorage": {
+              "target": "Package",
+              "version": "[1.8.0, )"
+            },
             "Microsoft.AspNetCore.Authentication.Google": {
               "target": "Package",
               "version": "[6.0.22, )"
@@ -204,6 +212,14 @@
             "Google.Apis.Auth.AspNetCore3": {
               "target": "Package",
               "version": "[1.62.1, )"
+            },
+            "Hangfire": {
+              "target": "Package",
+              "version": "[1.8.6, )"
+            },
+            "Hangfire.MemoryStorage": {
+              "target": "Package",
+              "version": "[1.8.0, )"
             },
             "Microsoft.AspNetCore.Authentication.Google": {
               "target": "Package",
