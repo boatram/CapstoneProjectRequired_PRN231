@@ -124,6 +124,8 @@ namespace Repository
                 throw new CrudException(HttpStatusCode.BadRequest, "Get topic list error!!!!!", ex.Message);
             }
         }
+        public void Update(TopicOfGroup topic, int topicid) => TopicOfGroupDAO.Instance.Update(topic, topicid);
+
         public void UpdateStatus(int Id) => TopicDAO.Instance.UpdateStatus(Id);
     }
 }

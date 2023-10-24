@@ -1,4 +1,5 @@
 ﻿using BusinessObjects;
+using BusinessObjects.BusinessObjects;
 using BusinessObjects.DTOs.Request;
 using BusinessObjects.DTOs.Response;
 using Microsoft.AspNetCore.Authorization;
@@ -22,6 +23,7 @@ namespace PRN231.CPR.API.Controllers
         {
             accountRepository = repository;
         }
+        [Authorize(Roles = "Lecturer")]
         [EnableQuery]
         public async Task<ActionResult<IEnumerable<AccountResponse>>> Get()
         {
