@@ -20,6 +20,7 @@ namespace Repository
         Task<AccountResponse> Login(LoginRequest request);
         Task<List<AccountResponse>> CreateAccount(IFormFile file, ExcelChoice choice);
         Task<List<StudentInSemesterResponse>> GetAccountsInSemester();
+        Task<AccountResponse> RevokeRefreshToken(string email);
         Task<AccountResponse> GetAccountById(int id);
         Task<AccountResponse> LoginGoogle(string data);
         Task<AccountResponse> VerifyAndGenerateToken(TokenRequest request);

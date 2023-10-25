@@ -2,6 +2,7 @@ using BusinessObjects.DTOs.Response;
 using Google.Apis.Auth.AspNetCore3;
 using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.OData;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OData.ModelBuilder;
@@ -10,8 +11,11 @@ using MuTote.API.AppStart;
 using Newtonsoft.Json;
 using PRN231.CPR.API.Mapper;
 using Repository;
+using Repository.Extensions;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Reflection;
+using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,6 +48,7 @@ builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
 builder.Services.AddScoped<ITopicRepository, TopicRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IFileStorageService, FileStorageService>();
+builder.Services.AddScoped<ICacheService, CacheService>();
 builder.Services.AddScoped<IGroupProjectRepository, GroupPojectRepository>();
 builder.Services.AddAutoMapper(typeof(Mapping));
 builder.Services.AddSwaggerGen(options =>
@@ -77,6 +82,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 builder.Services.ConfigureHangfireServices(builder.Configuration);
+builder.Services.AddMemoryCache();
 //start JWT
 var key = builder.Configuration.GetValue<string>("ApiSetting:Secret");
 builder.Services.AddAuthentication(x =>
@@ -103,6 +109,52 @@ builder.Services.AddAuthentication(x =>
             ClockSkew = TimeSpan.Zero
         };
     });
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy =>
+    {
+        policy.RequireRole("Admin");
+        policy.RequireAssertion(context =>
+        {
+            var jwtClaimValue = context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Jti)?.Value;
+            var idClaimValue = context.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (idClaimValue != null)
+            {
+                ICacheService cacheService = new CacheService();
+                var cache = cacheService.GetData<string>($"{jwtClaimValue}");
+
+                if (cache != null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        });
+    });
+    options.AddPolicy("Lecturer", policy => {
+
+        policy.RequireRole("Lecturer");
+        policy.RequireAssertion(context =>
+        {
+            var jwtClaimValue = context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Jti)?.Value;
+            var idClaimValue = context.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (idClaimValue != null)
+            {
+                ICacheService cacheService = new CacheService();
+                var cache = cacheService.GetData<string>($"{jwtClaimValue}");
+
+                if (cache != null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        });
+    } );
+   // options.AddPolicy("Student", policy => policy.RequireRole("Student"));
+});
 //end JWT
 var app = builder.Build();
 
@@ -118,5 +170,4 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseHangfireDashboard();
 app.MapControllers();
-
 app.Run();
