@@ -25,6 +25,9 @@ namespace BusinessObjects.DTOs.Response
         public string? Token { get; set; }
         public int? SpecializationId { get; set; }
         public string? RefreshToken { get; set; }
+        public string? JwtId { get; set; }
+        public DateTime? AddedDate { get; set; }
+        public DateTime? ExpiredDate { get; set; }
         public SpecializationResponse Specialization { get; set; }
     }
 }

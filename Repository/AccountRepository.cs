@@ -9,12 +9,15 @@ using Firebase.Auth;
 using Google.Apis.Auth;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Results;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using OfficeOpenXml;
 using Repository.Exceptions;
+using Repository.Extensions;
 using Repository.Helpers;
 using System;
 using System.Collections.Generic;
@@ -40,12 +43,14 @@ namespace Repository
     {
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
+        private readonly ICacheService cacheService;
         private readonly ISpecializationRepository specializationRepository;
-        public AccountRepository( IMapper mapper, IConfiguration configuration,ISpecializationRepository specializationRepository) 
+        public AccountRepository( IMapper mapper, IConfiguration configuration,ISpecializationRepository specializationRepository,ICacheService cacheService) 
         { 
             _mapper = mapper;
             _config = configuration;
             this.specializationRepository = specializationRepository;
+            this.cacheService = cacheService;
         }
         public async Task<List<AccountResponse>> CreateAccount(IFormFile file, ExcelChoice choice)
         {
@@ -71,7 +76,7 @@ namespace Repository
                                     {
                                         throw new CrudException(HttpStatusCode.BadRequest, "Code has already !!!", "");
                                     }
-                                    var cus = AccountDAO.Instance.GetAccounts().Where(s => s.Email == account.Email).SingleOrDefault();
+                                    var cus = AccountDAO.Instance.GetAccounts().Where(s => s.Email == account.Email || s.Email.Equals(_config["AdminAccount:Email"])).SingleOrDefault();
                                     if (cus != null)
                                     {
                                         throw new CrudException(HttpStatusCode.BadRequest, "Email has already !!!", "");
@@ -211,26 +216,6 @@ namespace Repository
                 throw new CrudException(HttpStatusCode.BadRequest, "Get Account By ID Error!!!", ex.InnerException?.Message);
             }
         }
-        public async Task<string> GetJwt(int accountId)
-        {
-            try
-            {
-                var account = AccountDAO.Instance.GetAccounts().Where(s => s.Id == accountId).SingleOrDefault();
-                if (account == null)
-                {
-                    throw new CrudException(HttpStatusCode.NotFound, $"Not found account with id {accountId}", "");
-                }
-                return GenerateJwtToken(account);
-            }
-            catch (CrudException ex)
-            {
-                throw ex;
-            }
-            catch (Exception ex)
-            {
-                throw new CrudException(HttpStatusCode.BadRequest, "Get Jwt error!!!!!", ex.Message);
-            }
-        }
 
         public async Task<AccountResponse> GetToUpdateStatus(int id)
         {
@@ -293,7 +278,7 @@ namespace Repository
        public async Task<AccountResponse>VerifyAndGenerateToken(TokenRequest request)
         {
             try
-            {
+            {              
                 var jwtTokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(_config["ApiSetting:Secret"]);
                 TokenValidationParameters tokenValidationParameters = new TokenValidationParameters
@@ -306,22 +291,74 @@ namespace Repository
                 var tokenInVerification = jwtTokenHandler.ValidateToken(request.Token, tokenValidationParameters, out var tokenValidation);
                 if (tokenValidation is JwtSecurityToken securityToken)
                 {
-                    var rs=securityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,StringComparison.InvariantCultureIgnoreCase);
+                    var rs = securityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase);
                     if (rs == false) return null;
                 }
+
                 var utcExpiredDate = long.Parse(tokenInVerification.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Exp).Value);
-                var dateTimeVal = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-                var expiredDate = dateTimeVal.AddSeconds(utcExpiredDate);
-                if (expiredDate > DateTime.Now)  throw new CrudException(HttpStatusCode.BadRequest, "Expired token","");
-                var storedToken = AccountDAO.Instance.GetAccounts().Where(a => a.Token == request.RefreshToken).FirstOrDefault();
-                if(storedToken == null) throw new CrudException(HttpStatusCode.BadRequest, "Invalid Token", "");
-                var jti=tokenInVerification.Claims.FirstOrDefault(x=>x.Type==JwtRegisteredClaimNames.Jti).Value;
-                if(storedToken.JwtId!= jti) throw new CrudException(HttpStatusCode.BadRequest, "Invalid Token", "");
-                if(storedToken.ExpiredDate < DateTime.UtcNow) throw new CrudException(HttpStatusCode.BadRequest, "Expired Token", "");
-                var cus = _mapper.Map<Account, AccountResponse>(storedToken);
-                var acc = GenerateJwtToken(storedToken);
-                cus.Token = acc.AccessToken;
-                cus.RefreshToken = acc.RefreshToken;
+                var t = tokenInVerification.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+                var expiredDate = DateTimeOffset.FromUnixTimeSeconds(utcExpiredDate).DateTime;
+                if (expiredDate > DateTime.UtcNow) throw new CrudException(HttpStatusCode.BadRequest, "Token is not expried", "");
+
+                Account acc = new Account();
+                if (request.RefreshToken.Equals(_config["AdminAccount:RefreshToken"]))
+                {
+                    var jti = tokenInVerification.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
+                    if (_config["AdminAccount:JwtId"] != jti) throw new CrudException(HttpStatusCode.BadRequest, "Invalid Token", "");
+                    if (DateTime.Parse(_config["AdminAccount:ExpiredDate"]) < DateTime.UtcNow) throw new CrudException(HttpStatusCode.BadRequest, "Expired Token", "");
+                    acc.Name = "Admin";
+                    acc.JwtId = _config["AdminAccount:JwtId"];
+                }
+
+
+                else
+                {
+                     acc = AccountDAO.Instance.GetAccounts().Where(a => a.Token == request.RefreshToken).FirstOrDefault();
+                    if (acc == null) throw new CrudException(HttpStatusCode.BadRequest, "Invalid Token", "");
+                    var jti = tokenInVerification.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
+                    if (acc.JwtId != jti) throw new CrudException(HttpStatusCode.BadRequest, "Invalid Token", "");
+                    if (acc.ExpiredDate < DateTime.UtcNow) throw new CrudException(HttpStatusCode.BadRequest, "Expired Token", "");
+                }
+                var cus = _mapper.Map<Account, AccountResponse>(acc);
+                    var account = GenerateJwtToken(acc);
+                    cus.Token = account.AccessToken;
+                    cus.RefreshToken = account.RefreshToken;
+                    return cus;
+                }
+            catch (CrudException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw new CrudException(HttpStatusCode.BadRequest, "Progress Error!!!", ex.InnerException?.Message);
+            }
+        }
+        public async Task<AccountResponse> RevokeRefreshToken(string email)
+        {
+            try
+            {
+                Account customer = new Account();
+                if (email.Equals(_config["AdminAccount:Email"]))
+                {
+                    cacheService.RemoveData($"{_config["AdminAccount:JwtId"]}");
+                    customer.Name = "Admin";
+                }
+                else
+                {
+                    customer = AccountDAO.Instance.GetAccounts().Where(a => a.Email.Equals(email)).SingleOrDefault();
+                    if (customer == null)
+                    {
+                        throw new CrudException(HttpStatusCode.NotFound, $"Not found account with gmail {email}", "");
+                    }
+                    cacheService.RemoveData($"{customer.JwtId}");
+                    customer.Token = null;
+                    customer.AddedDate = null;
+                    customer.JwtId = null;
+                    customer.ExpiredDate = null;
+                    AccountDAO.Instance.Update(customer, customer.Id);
+                }
+                var cus = _mapper.Map<Account, AccountResponse>(customer);
                 return cus;
             }
             catch (CrudException ex)
@@ -333,7 +370,6 @@ namespace Repository
                 throw new CrudException(HttpStatusCode.BadRequest, "Progress Error!!!", ex.InnerException?.Message);
             }
         }
-
         public async Task<AccountResponse> UpdateAccount(int accountId, UpdateAccountRequest request)
         {
             try
@@ -451,27 +487,39 @@ namespace Repository
                 new Claim(ClaimTypes.Role, customer.Role.Name),
                 new Claim(ClaimTypes.Name , customer.Name),
                 new Claim(ClaimTypes.Email , customer.Email),
-                new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
+               new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.MobilePhone , customer.Phone),
                  });
+                customer.Token = GenerateRefreshToken();
+                customer.AddedDate = DateTime.UtcNow;
+                customer.ExpiredDate = DateTime.UtcNow.AddMonths(6);
             }
             else
             {
                 tokenDescriptor.Subject = new ClaimsIdentity(new Claim[]
                 {
-                new Claim(ClaimTypes.Role, "admin"),
-                 new Claim(ClaimTypes.Name , customer.Name)
+                     new Claim(ClaimTypes.NameIdentifier, "0"),
+                new Claim(ClaimTypes.Role, "Admin"),
+                 new Claim(ClaimTypes.Name , customer.Name),
+                  new Claim(JwtRegisteredClaimNames.Jti,_config["AdminAccount:JwtId"])
                 });
+                _config["AdminAccount:ExpiredDate"] = DateTime.UtcNow.AddMonths(6).ToString();
+                customer.Token = _config["AdminAccount:RefreshToken"];
+                customer.ExpiredDate = DateTime.Parse(_config["AdminAccount:ExpiredDate"]);
+                customer.JwtId = _config["AdminAccount:JwtId"];
             }
             tokenDescriptor.Expires = DateTime.Now.AddMinutes(2);
             tokenDescriptor.SigningCredentials = new(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var rs=new JwtSecurityTokenHandler().WriteToken(token);
-            customer.JwtId=token.Id;
-            customer.Token =GenerateRefreshToken();
-            customer.AddedDate= DateTime.UtcNow;
-            customer.ExpiredDate= DateTime.UtcNow.AddMonths(6);
-            AccountDAO.Instance.Update(customer, customer.Id);
+            if (customer.Name != "Admin")
+            {
+                customer.JwtId = token.Id;
+                AccountDAO.Instance.Update(customer, customer.Id);
+            }
+
+            var expiryTime = DateTimeOffset.Now.AddMinutes(2);
+            cacheService.SetData<string>($"{customer.JwtId}", customer.JwtId, expiryTime);
             return new
             {
                 AccessToken = rs,

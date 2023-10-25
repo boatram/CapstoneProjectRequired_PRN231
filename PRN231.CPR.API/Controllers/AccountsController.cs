@@ -23,7 +23,7 @@ namespace PRN231.CPR.API.Controllers
         {
             accountRepository = repository;
         }
-        [Authorize(Roles = "Lecturer")]
+        [Authorize(Policy = "Admin")]
         [EnableQuery]
         public async Task<ActionResult<IEnumerable<AccountResponse>>> Get()
         {
@@ -78,6 +78,12 @@ namespace PRN231.CPR.API.Controllers
             var rs = await accountRepository.VerifyAndGenerateToken(request);
             return Ok(rs);
         }
+        [HttpPost("token-revoke")]
+        public async Task<ActionResult<AccountResponse>> RevokeRefreshToken(string email)
+        {
+            var rs = await accountRepository.RevokeRefreshToken(email);
+            return Ok(rs);
+        }
         [AllowAnonymous]
         [HttpPost()]
         public async Task<ActionResult<AccountResponse>> Post(IFormFile file, ExcelChoice choice)
@@ -106,6 +112,7 @@ namespace PRN231.CPR.API.Controllers
             var rs = await accountRepository.UpdatePass(resetPassword);
             return Ok(rs);
         }
+
 
     }
 }
