@@ -9,9 +9,11 @@ namespace BusinessObjects.DTOs.Request
 {
     public class UpdateAccountRequest
     {
+        public int Id { get; set; }
         [Required]
         [StringLength(int.MaxValue, MinimumLength = 3, ErrorMessage = "Invalid Name")]
         public string Name { get; set; } = null!;
+        [StringLength(11, MinimumLength = 10, ErrorMessage = "Phone is invalid")]
         public string Phone { get; set; }
         public string? OldPassword { get; set; }
         [DataType(DataType.Password)]

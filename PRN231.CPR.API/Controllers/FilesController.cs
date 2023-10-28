@@ -17,6 +17,7 @@ namespace PRN231.CPR.API.Controllers
             _fileStorageService = fileStorageService;
         }
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<string>> UploadFile(IFormFile file)
         {
             if (file.Length > MAX_UPLOAD_FILE_SIZE)

@@ -1,0 +1,108 @@
+﻿@page
+@model PRN231.CPR.Page.Pages.StudentPages.EditModel
+@{
+    Layout = "../Shared/_LayoutHome.cshtml";
+
+}
+<div class="  profile profile-body">
+    <form method="post" enctype="multipart/form-data">
+        <div class="main-content">
+            <div class="profile-detail">
+                <div class="profile-col">
+                    <div class="profile-content">
+                        <div class="profile-photo">
+                            <div class="photo">
+                                <img name="userDisplay" src="@Model.Account.Avatar" class="user-photo" id="user-photo" value="" />
+                            </div>
+                            <span class="avatar">
+                                <img src="~/img/edit.png" class="upload-photo">
+                                <input type="file" name="userDisplayPic" accept=".jpg,.jpeg,.bmp,.gif,.png,.PNG,.JPG,.JPEG,.BMP,.GIF" class="inputUpload" id="inputUpload" value="">
+                            </span>
+                        </div>
+                        <div class="profile-name">
+                            <p class="name">@Model.Account.Name</p>
+                            <p class="personal-profile">PERSONAL PROFILE</p>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+            <div class="profile-detail-2">
+                <div class="progess-profile">
+                    <div class="profile-slogan">
+                        <div class="profile-box">
+                            <img class="box-img" src="~/img/profile.jpg" />
+                            <div class="box-detail">
+                                <h5 class="line anim-typewriter">Capstone Project<span class="project-name"> Supporting</span></h5>
+                                <h5 class="line anim-typewriter">platform for student in FPT Uni</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="profile">
+                    <div class="profile-page-1">
+                        <input hidden asp-for="Account.Id" />
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputUsername">Name</label>
+                            <input asp-for="Account.Name" class="form-control" id="inputUsername" type="text" readonly>
+                        </div>
+                            @if(User.IsInRole("Lecturer")){
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Gender</label>
+                                    <input asp-for="Account.Gender" class="form-control" id="inputUsername" type="text" readonly>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputAddress">Old Password</label>
+                                    <input asp-for="Account.OldPassword" class="form-control" id="inputAddress" type="password">
+                                    <span asp-validation-for="Account.OldPassword" class="text-danger"></span>
+                                </div>
+                             </div>
+                            }
+                           else{
+                            <div class="mb-3">
+                                <label class="small mb-1">Gender</label>
+                                <input asp-for="Account.Gender" class="form-control" id="inputUsername" type="text" readonly>
+                           </div>
+                           } 
+                        @if (User.IsInRole("Lecturer"))
+                        {
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputFirstName">Password</label>
+                                    <input type="password" asp-for="Account.NewPassword" class="form-control" id="inputFirstName">
+                                    <span asp-validation-for="Account.NewPassword" class="text-danger " style="font-weight:bold"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputLastName">Confirm Password</label>
+                                    <input type="password" asp-for="Account.ConfirmNewPassword" class="form-control" id="inputLastName">
+                                    <span asp-validation-for="Account.ConfirmNewPassword" class="text-danger " style="font-weight:bold"></span>
+                                </div>
+                            </div>
+                        }
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPhone">Phone number</label>
+                                <input asp-for="Account.Phone" class="form-control" id="inputPhone" type="tel">
+                                <span asp-validation-for="Account.Phone" class="text-danger " style="font-weight:bold"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputBirthday">Birthday</label>
+                                <input asp-for="Account.DateOfBirth" class="form-control" id="inputBirthday" type="date" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="text-danger " style="font-weight:bold">@Model.Message</span>
+        </div>
+        <div class="profile-button">
+            <button class="save-button" type="submit">
+                <span class="save"></span>
+                <span class="save"></span>
+                <span class="save"></span>
+                <span class="save"></span>
+                Save
+            </button>
+        </div>
+    </form>
+</div>

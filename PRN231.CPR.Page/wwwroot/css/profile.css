@@ -1,0 +1,461 @@
+﻿body {
+}
+.main-nav {
+    animation: changeBackgroundColor 5s ease-in-out infinite;
+}
+
+@keyframes changeBackgroundColor {
+    0% {
+        background-color: #c3e1eb;
+    }
+
+    50% {
+        background-color: #d1d8ee;
+    }
+
+    75% {
+        background-color: #c3e4df;
+    }
+
+    100% {
+        background-color: #c3e1eb;
+    }
+}
+
+.profile-body {
+    background: #fff !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: scroll;
+}
+
+.profile {
+    text-align: left;
+    padding: 64px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.main-content {
+    margin: 64px 0px 0px  0px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-detail {
+    width: 283px;
+    margin-left: 20px;
+}
+
+.profile-content {
+    border-radius: 15px;
+    background-color: #fff;
+    padding: 32px 0;
+}
+
+.bar-nav-icon {
+    text-decoration: none;
+    font-size: 20px;
+    line-height: 25px;
+    text-transform: capitalize;
+    margin:16px;
+}
+
+.profile-attribute:hover {
+    background: rgba(107, 216, 251, 0.57);
+}
+
+.bar-nav-icon {
+    color: #000 !important;
+}
+
+.profile-photo {
+    margin: 0 auto;
+    width: 160px;
+    height: 160px;
+    background: #1266f1;
+    border-radius: 8px;
+    position: relative;
+}
+
+.avatar {
+    width: 37px;
+    background-position: -4px -31px;
+    height: 37px;
+    position: absolute;
+    bottom: 5px;
+    left: 139px;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.photo {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    overflow: hidden
+}
+
+.user-photo {
+    height: 100%;
+    width: 100%;
+}
+
+.profile-avatar {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inputUpload {
+    position: absolute;
+    width: 100%;
+    height: 200%;
+    outline: 0;
+    border: 0;
+    z-index: 1;
+    opacity: 0;
+    cursor: pointer;
+    bottom: 0;
+}
+
+.profile-img,
+.logout {
+    margin: 15px;
+    height: 24px;
+    display: inline-flex;
+    justify-content: center;
+}
+
+.profile-name {
+    text-align: center;
+    padding: 0 20px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upload-photo {
+    position: absolute;
+    bottom: 0;
+}
+
+.sideBarNav {
+    margin: 20px;
+    padding: 0px;
+}
+
+.profile-attribute {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 10px;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 25px;
+    text-transform: capitalize;
+    color: #000000;
+}
+
+.profile-detail-2 {
+    width: 877px;
+    padding: 30px;
+    border-radius: 15px;
+}
+
+    .profile-detail-2 img {
+        padding: 0px 5px;
+    }
+
+    .profile-detail-2 p {
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 19px;
+        color: #5F6368;
+        margin-top: 10px;
+    }
+
+
+.profile-detail .name,
+.profile-detail-2 h4 {
+    margin-bottom: 0px;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 30px;
+    text-transform: capitalize;
+    color: #000000;
+}
+
+.profile-col {
+    border-radius: 10px;
+    padding: 32px 0;
+    position: sticky;
+    top: 15px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.personal-profile,
+.detail-header,
+.information-name {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    text-transform: uppercase;
+    color: #7B7B7B;
+    margin: 0px;
+}
+
+
+.progess-profile {
+    border-radius: 10px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    padding: 20px 30px;
+    position: relative;
+    margin-bottom: 12px;
+    background-color: #f7f5ff;
+    font-family: 'Anonymous Pro',monospace;
+}
+
+.header-slogan {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-top: 10px !important;
+    color: #4a4a4a;
+}
+
+
+.profile-page-1, .login-detail-profile {
+    border-radius: 10px;
+    border: solid 1px #cacaca;
+    background-color: #fff;
+    padding: 20px 30px 2px;
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between
+}
+
+.profile-slogan {
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    transition: all 0.2s ease 0s;
+    overflow: hidden;
+}
+
+.profile-box {
+    color: rgb(42, 42, 46);
+    box-sizing: border-box;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+}
+
+.box-img {
+    color: rgb(42, 42, 46);
+    height: 150px;
+    aspect-ratio: auto 74 / 74;
+    box-sizing: border-box;
+    border: 0;
+    vertical-align: middle;
+}
+
+.box-detail {
+    color: rgb(42, 42, 46);
+    box-sizing: border-box;
+    padding-left: 16px;
+    padding-right: 16px;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+}
+
+.line {
+    position: relative;
+    top: 50%;
+    width: 24em;
+    margin: 0 auto;
+    border-right: 2px solid rgba(255,255,255,0.75);
+    font-size: 180%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.anim-typewriter {
+    animation: typewriter 4s steps(40) 1s 1 normal both, blinkTextCursor 500ms steps(40)infinite normal;
+}
+
+@keyframes typewriter {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 16em;
+    }
+}
+
+@keyframes blinkTextCursor {
+    from {
+        border-right-color: rgb(255,255,255,0.75);
+    }
+
+    to {
+        border-right-color: transparent;
+    }
+}
+
+.project-name {
+    font-weight: 600;
+    color: #1266f1;
+}
+
+.save-button:hover {
+    font-weight: bold;
+}
+.save-button {
+    position: relative;
+    display: inline-block;
+    padding: 10px 30px;
+    border: none;
+    text-transform: uppercase;
+    color: black;
+    background: #f7f5ff;
+    letter-spacing: 2px;
+    font-size: 16px;
+    transition: 0.5s;
+}
+
+.save {
+    display: block;
+    position: absolute;
+    background: linear-gradient(90deg, #617FCD 42.42%, #BE6EBF 100%);
+}
+
+    .save:nth-child(1) {
+        left: 0;
+        bottom: 0;
+        width: 2px;
+        height: 100%;
+        transform: scaleY(0);
+        transform-origin: top;
+        transition: transform 0.5s;
+        transition-delay: 0.5s;
+    }
+
+.save-button:hover .save:nth-child(1) {
+    transform: scaleY(1);
+    transform-origin: bottom;
+    transition: transform 0.5s;
+    transition-delay: 0.5s;
+}
+
+.save:nth-child(2) {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s;
+    transition-delay: 0.5s;
+}
+
+.save-button:hover .save:nth-child(2) {
+    transform: scaleX(1);
+    transform-origin: left;
+    transition: transform 0.5s;
+    transition-delay: 0.5s;
+}
+
+.save:nth-child(3) {
+    right: 0;
+    bottom: 0;
+    width: 2px;
+    height: 100%;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.5s;
+    transition-delay: 0.5s;
+}
+
+.save-button:hover .save:nth-child(3) {
+    transform: scaleY(1);
+    transform-origin: bottom;
+    transition: transform 0.5s;
+    transition-delay: 0.5s;
+}
+
+.save:nth-child(4) {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s;
+    transition-delay: 0.5s;
+}
+
+.save-button:hover .save:nth-child(4) {
+    transform: scaleX(1);
+    transform-origin: left;
+    transition: transform 0.5s;
+    transition-delay: 0.5s;
+}
+
+.profile-button {
+    margin-top: 24px;
+    margin-left: 20px;
+    margin-bottom: 24px;
+    justify-content: right;
+    display: flex;
+    width: 100%
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error {
+    display: flex;
+    align-items: center;
+    margin-top: 6px;
+    color: #d93025;
+    font-size: 13px;
+    display: none;
+    align-items: flex-start;
+}
+
+.error-text {
+    font-size: 14px;
+}
+.form-control, .dataTable-input {
+    display: block;
+    width: 100%;
+    padding: 0.875rem 1.125rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1;
+    color: #69707a;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #c5ccd6;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.35rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}

@@ -12,6 +12,32 @@
     <title>Home</title>
 
     <!-- CSS FILES -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+          integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+            integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
+    <!-- Vendor CSS Files -->
+    <link href="~/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/vendor/aos/aos.css" rel="stylesheet">
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link href="~/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,10 +52,60 @@
     <link href="~/css/templatemo-topic-listing.css" rel="stylesheet">
 
 </head>
-
 <body id="top">
-@RenderBody()
+<main>
+     <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" asp-page="/StudentPage/HomePage" >
+                <img class="logo-img" src="https://feid.fpt.edu.vn/FPT_Education_logo.svg"
+                </a>
 
+                <div class="d-lg-none ms-auto me-4">
+                    <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
+                </div>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-lg-5 me-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" asp-page="/StudentPages">Home</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" asp-page="/StudentPages">Browse Topics</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" asp-page="/StudentPages">Create Group Project</a>
+                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" asp-page="/StudentPages/Edit">My Profile</a>
+                    </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
+
+                            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                                <li><a class="dropdown-item" href="topics-listing.html">Topics Listing</a></li>
+
+                                <li><a class="dropdown-item" href="contact.html">Contact Form</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="d-none d-lg-block">
+                        <a href="#top" class="">
+                        <img class="icon-img" src="https://cdn-icons-png.flaticon.com/512/56/56805.png" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        @RenderBody()
+    </main>
 
     <!-- JAVASCRIPT FILES -->
     <script src="~/js/jquery.min.js"></script>
@@ -37,6 +113,6 @@
     <script src="~/js/jquery.sticky.js"></script>
     <script src="~/js/click-scroll.js"></script>
     <script src="~/js/custom.js"></script>
-
+    <script src="~/js/site.js"></script>
 </body>
 </html>

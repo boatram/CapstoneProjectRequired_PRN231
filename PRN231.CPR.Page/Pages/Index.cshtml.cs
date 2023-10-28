@@ -38,7 +38,7 @@ namespace PRN231.CPR.Page.Pages
         {
             if (ModelState.IsValid && Regex.IsMatch(Account.Email, "^[a-zA-Z0-9._%+-]+@(fpt\\.edu\\.vn|fe\\.edu\\.vn|gmail\\.com)$"))
             {
-                HttpResponseMessage responseMessage = await SendDataHelper<LoginRequest>.PostData($"https://localhost:7298/authentication", Account);
+                HttpResponseMessage responseMessage = await SendDataHelper<LoginRequest>.PostData($"https://localhost:7298/authentication", Account,null);
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string data = await responseMessage.Content.ReadAsStringAsync();
@@ -49,12 +49,18 @@ namespace PRN231.CPR.Page.Pages
                     var customer = System.Text.Json.JsonSerializer.Deserialize<AccountResponse>(data, options);
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var jwtSecurityToken = tokenHandler.ReadJwtToken(customer.Token);
+                    var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+                    var role = jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == "role").Value;
+                    identity.AddClaim(new Claim(ClaimTypes.Email, jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == "email").Value));
+                    identity.AddClaim(new Claim(ClaimTypes.Role, jwtSecurityToken.Claims.FirstOrDefault(x => x.Type == "role").Value));
+                    var principal = new ClaimsPrincipal(identity);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
                     SessionHelper.SetObjectAsJson(HttpContext.Session, "jwt", customer.Token);
-                    string role = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == "role")?.Value;
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, "role", role);
                     if (role.Equals("admin"))
-                        return RedirectToPage("./AdminDashboard");
+                        return RedirectToPage("/AdminDashboard");
                     else
-                        return RedirectToPage("./StudentPages/HomePage");
+                        return RedirectToPage("/StudentPages/HomePage");
                 }
                 else
                 {
