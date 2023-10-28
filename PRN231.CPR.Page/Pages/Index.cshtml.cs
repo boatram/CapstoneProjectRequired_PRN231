@@ -56,6 +56,7 @@ namespace PRN231.CPR.Page.Pages
                     var principal = new ClaimsPrincipal(identity);
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
                     SessionHelper.SetObjectAsJson(HttpContext.Session, "jwt", customer.Token);
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, "refreshToken", customer.RefreshToken);
                     SessionHelper.SetObjectAsJson(HttpContext.Session, "role", role);
                     if (role.Equals("admin"))
                         return RedirectToPage("/AdminDashboard");

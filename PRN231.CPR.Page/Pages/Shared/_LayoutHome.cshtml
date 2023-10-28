@@ -71,7 +71,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-lg-5 me-lg-auto">
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" asp-page="/StudentPages">Home</a>
+                            <a class="nav-link click-scroll" asp-page="/StudentPages/HomePage">Home</a>
                         </li>
 
                         <li class="nav-item">
@@ -97,7 +97,7 @@
                     </ul>
 
                     <div class="d-none d-lg-block">
-                        <a href="#top" class="">
+                        <a  asp-page="/StudentPages/HomePage" asp-page-handler="logout" class="">
                         <img class="icon-img" src="https://cdn-icons-png.flaticon.com/512/56/56805.png" />
                         </a>
                     </div>

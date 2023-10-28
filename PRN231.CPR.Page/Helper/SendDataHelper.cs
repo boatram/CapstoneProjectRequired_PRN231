@@ -21,6 +21,8 @@ namespace PRN231.CPR.Page.Helper
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             HttpResponseMessage response = await client.SendAsync(request);
+            if (response.StatusCode.ToString() == "Unauthorized")
+                return null;
             string strData = await response.Content.ReadAsStringAsync();
             dynamic tmp = JsonConvert.DeserializeObject(strData);
             string data = JsonConvert.SerializeObject(tmp.value);
@@ -38,6 +40,8 @@ namespace PRN231.CPR.Page.Helper
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             HttpResponseMessage response = await client.SendAsync(request);
+            if (response.StatusCode.ToString() == "Unauthorized")
+                return null;
             string strData = await response.Content.ReadAsStringAsync();
             var options = new JsonSerializerOptions
             {

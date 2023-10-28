@@ -313,7 +313,8 @@ namespace Repository
 
                 else
                 {
-                     acc = AccountDAO.Instance.GetAccounts().Where(a => a.Token == request.RefreshToken).FirstOrDefault();
+                     var list= AccountDAO.Instance.GetAccounts().ToList();
+                    if (list != null) acc = list.Where(a => a.Token != null && a.Token.Equals(request.RefreshToken)).SingleOrDefault();
                     if (acc == null) throw new CrudException(HttpStatusCode.BadRequest, "Invalid Token", "");
                     var jti = tokenInVerification.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
                     if (acc.JwtId != jti) throw new CrudException(HttpStatusCode.BadRequest, "Invalid Token", "");
@@ -495,7 +496,7 @@ namespace Repository
                new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.MobilePhone , customer.Phone),
                  });
-                customer.Token = GenerateRefreshToken();
+                customer.Token = GenerateRefreshToken(customer);
                 customer.AddedDate = DateTime.UtcNow;
                 customer.ExpiredDate = DateTime.UtcNow.AddMonths(6);
             }
@@ -532,12 +533,23 @@ namespace Repository
             };
             
         }
-        private string GenerateRefreshToken()
+        private string GenerateRefreshToken(Account? customer)
         {
-            var randomNumber = new byte[64];
-            using var rng = RandomNumberGenerator.Create();
-            rng.GetBytes(randomNumber);
-            return Convert.ToBase64String(randomNumber);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_config["ApiSetting:Secret"]);
+            var tokenDescriptor = new SecurityTokenDescriptor();
+                tokenDescriptor.Subject = new ClaimsIdentity(new Claim[]
+                 {
+                new Claim(ClaimTypes.NameIdentifier, customer.Id.ToString()),
+                new Claim(ClaimTypes.Role, customer.Role.Name),
+                new Claim(ClaimTypes.Name , customer.Name),
+                new Claim(ClaimTypes.Email , customer.Email),
+               new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.MobilePhone , customer.Phone),
+                 });
+            tokenDescriptor.SigningCredentials = new(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         public async Task<List<AccountResponse>> GetAccounts()
