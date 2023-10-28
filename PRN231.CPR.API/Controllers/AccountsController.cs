@@ -23,7 +23,7 @@ namespace PRN231.CPR.API.Controllers
         {
             accountRepository = repository;
         }
-        [Authorize(Policy = "Admin")]
+        [Authorize]
         [EnableQuery]
         public async Task<ActionResult<IEnumerable<AccountResponse>>> Get()
         {
@@ -48,6 +48,7 @@ namespace PRN231.CPR.API.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPut]
+        [Authorize(Roles = "Student" + "," + "Lecturer")]
         public async Task<ActionResult<AccountResponse>> Put([FromBody] UpdateAccountRequest userRequest, int key)
         {
             var rs = await accountRepository.UpdateAccount(key, userRequest);

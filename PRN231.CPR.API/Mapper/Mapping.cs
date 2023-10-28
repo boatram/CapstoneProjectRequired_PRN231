@@ -18,6 +18,7 @@ namespace PRN231.CPR.API.Mapper
 
             CreateMap<Account, AccountResponse>().ReverseMap();
             CreateMap<UpdateAccountRequest, Account>().ReverseMap();
+            CreateMap<AccountResponse, UpdateAccountRequest>().ReverseMap();
             CreateMap<AccountRequest, Account>().ReverseMap();
             CreateMap<AccountRequest, AccountResponse>().ReverseMap();
             CreateMap<GoogleAccountResponse, AccountResponse>().ReverseMap();

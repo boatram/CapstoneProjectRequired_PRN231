@@ -24,7 +24,7 @@ namespace PRN231.CPR.Page.Pages
         {
             if (Regex.IsMatch(Account.Email, "^[a-zA-Z0-9._%+-]+@(fpt\\.edu\\.vn|fe\\.edu\\.vn|gmail\\.com)$"))
             {
-                HttpResponseMessage responseMessage = await SendDataHelper<dynamic>.PostData($"https://localhost:7298/verification?email={Account.Email}", Account.Email);
+                HttpResponseMessage responseMessage = await SendDataHelper<dynamic>.PostData($"https://localhost:7298/verification?email={Account.Email}", Account.Email,null);
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     string data = await responseMessage.Content.ReadAsStringAsync();
@@ -83,7 +83,7 @@ namespace PRN231.CPR.Page.Pages
             if (Account !=null)
             {
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "equal", false);
-                HttpResponseMessage responseMessage = await SendDataHelper<dynamic>.PostData($"https://localhost:7298/forgotten-password?Email={Account.Email}&NewPassword={Account.NewPassword}&ConfirmNewPassword={Account.ConfirmNewPassword}", Account);
+                HttpResponseMessage responseMessage = await SendDataHelper<dynamic>.PostData($"https://localhost:7298/forgotten-password?Email={Account.Email}&NewPassword={Account.NewPassword}&ConfirmNewPassword={Account.ConfirmNewPassword}", Account,null);
                 if (responseMessage.IsSuccessStatusCode) return RedirectToPage("/Index");
                 else Message = "Reset Fail !!";
             }

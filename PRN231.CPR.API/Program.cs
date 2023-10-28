@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OData.ModelBuilder;
 using Microsoft.OpenApi.Models;
 using MuTote.API.AppStart;
+using MuTote.API.Utility;
 using Newtonsoft.Json;
 using PRN231.CPR.API.Mapper;
 using Repository;
@@ -117,9 +118,7 @@ builder.Services.AddAuthorization(options =>
         policy.RequireAssertion(context =>
         {
             var jwtClaimValue = context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Jti)?.Value;
-            var idClaimValue = context.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-
-            if (idClaimValue != null)
+            if (jwtClaimValue != null)
             {
                 ICacheService cacheService = new CacheService();
                 var cache = cacheService.GetData<string>($"{jwtClaimValue}");
@@ -138,9 +137,7 @@ builder.Services.AddAuthorization(options =>
         policy.RequireAssertion(context =>
         {
             var jwtClaimValue = context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Jti)?.Value;
-            var idClaimValue = context.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-
-            if (idClaimValue != null)
+            if (jwtClaimValue != null)
             {
                 ICacheService cacheService = new CacheService();
                 var cache = cacheService.GetData<string>($"{jwtClaimValue}");
@@ -169,5 +166,6 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHangfireDashboard();
+app.UseMiddleware(typeof(GlobalErrorHandlingMiddleware));
 app.MapControllers();
 app.Run();

@@ -87,7 +87,7 @@ namespace Repository
                                     var checkPhone = CheckVNPhone(account.Phone);
                                     if (!checkPhone)                                    
                                     {
-                                        throw new CrudException(HttpStatusCode.BadRequest, "Wrong Phone", "");
+                                        throw new CrudException(HttpStatusCode.BadRequest, $"Wrong Phone {account.Phone}", "");
                                     }
                                     #endregion
                                     customer.Status = true;
@@ -381,8 +381,11 @@ namespace Repository
                 if (customer == null)
                 {
                     throw new CrudException(HttpStatusCode.NotFound, $"Not found customer with id{accountId.ToString()}", "");
-                }                
-                _mapper.Map<UpdateAccountRequest, Account>(request, customer);
+                }
+                if (request.Avatar == null) customer.Avatar = customer.Avatar;
+                else customer.Avatar = request.Avatar;
+                customer.Phone = request.Phone;
+                customer.DateOfBirth = request.DateOfBirth;
                 if (request.OldPassword != null && request.NewPassword != null)
                 {
                     if (!VerifyPasswordHash(request.OldPassword.Trim(), customer.PasswordHash, customer.PasswordSalt))
@@ -391,6 +394,8 @@ namespace Repository
                     customer.PasswordHash = passwordHash;
                     customer.PasswordSalt = passwordSalt;
                 }
+                customer.Id = accountId;
+               
                 AccountDAO.Instance.Update(customer, accountId);
                 return _mapper.Map<Account, AccountResponse>(customer);
             }
@@ -508,7 +513,7 @@ namespace Repository
                 customer.ExpiredDate = DateTime.Parse(_config["AdminAccount:ExpiredDate"]);
                 customer.JwtId = _config["AdminAccount:JwtId"];
             }
-            tokenDescriptor.Expires = DateTime.Now.AddMinutes(2);
+            tokenDescriptor.Expires = DateTime.Now.AddMinutes(10);
             tokenDescriptor.SigningCredentials = new(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var rs=new JwtSecurityTokenHandler().WriteToken(token);
@@ -518,7 +523,7 @@ namespace Repository
                 AccountDAO.Instance.Update(customer, customer.Id);
             }
 
-            var expiryTime = DateTimeOffset.Now.AddMinutes(2);
+            var expiryTime = DateTime.Now.AddMinutes(10);
             cacheService.SetData<string>($"{customer.JwtId}", customer.JwtId, expiryTime);
             return new
             {
