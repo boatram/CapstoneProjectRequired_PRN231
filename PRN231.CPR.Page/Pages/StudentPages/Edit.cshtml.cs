@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PRN231.CPR.Page.Helper;
 using Repository;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Text.Json;
 
@@ -25,14 +26,38 @@ namespace PRN231.CPR.Page.Pages.StudentPages
         public async Task<IActionResult> OnGet()
         {
             string token = SessionHelper.GetObjectFromJson<string>(HttpContext.Session, "jwt");
-            if (token != null)
+            string role = SessionHelper.GetObjectFromJson<string>(HttpContext.Session, "role");
+            string refreshToken = SessionHelper.GetObjectFromJson<string>(HttpContext.Session, "refreshToken");
+            refreshToken = refreshToken.Replace(" ", "+");
+            if (token != null && refreshToken !=null && role !=null)
             {
+                if (role.Equals("Student") || role.Equals("Lecturer"))
+                {
                     string email = User.FindFirstValue(ClaimTypes.Email);
-                    var cus = SendDataHelper<AccountResponse>.GetListData($"https://localhost:7298/odata/Accounts/?$filter=Email eq \'{email}\'", token).Result.SingleOrDefault();
+                    var cus = SendDataHelper<AccountResponse>.GetListData($"https://localhost:7298/odata/Accounts/?$filter=Email eq \'{email}\'", token).Result;
                     if (cus != null)
-                    Account = mapper.Map<UpdateAccountRequest>(cus);
-                    else return RedirectToPage("/Index");
-                    return Page(); 
+                        Account = mapper.Map<UpdateAccountRequest>(cus.SingleOrDefault());
+                    else
+                    {
+                        HttpResponseMessage responseMessage = SendDataHelper<AccountResponse>.PostData($"https://localhost:7298/token-verification?Token={token}&RefreshToken={refreshToken}",null, null).Result;
+                        if (responseMessage.IsSuccessStatusCode)
+                        {
+                            string data = await responseMessage.Content.ReadAsStringAsync();
+                            var options = new JsonSerializerOptions
+                            {
+                                PropertyNameCaseInsensitive = true,
+                            };
+                            var customer = System.Text.Json.JsonSerializer.Deserialize<AccountResponse>(data, options);
+                            Account = mapper.Map<UpdateAccountRequest>(customer);
+                            SessionHelper.SetObjectAsJson(HttpContext.Session, "jwt", customer.Token);
+                            SessionHelper.SetObjectAsJson(HttpContext.Session, "refreshToken", customer.RefreshToken);
+                        }
+                        else return RedirectToPage("/Index");
+                    }
+                    return Page();
+                }
+                return RedirectToPage("/AdminDashboard");
+
             }
             else return RedirectToPage("/Index");
         }
@@ -41,9 +66,11 @@ namespace PRN231.CPR.Page.Pages.StudentPages
         public async Task<IActionResult> OnPostAsync(IFormFile? userDisplayPic)
         {
             string token = SessionHelper.GetObjectFromJson<string>(HttpContext.Session, "jwt");
-            if (token != null)
+            string role = SessionHelper.GetObjectFromJson<string>(HttpContext.Session, "role");
+            string refreshToken = SessionHelper.GetObjectFromJson<string>(HttpContext.Session, "refreshToken");
+            refreshToken = refreshToken.Replace(" ", "+");
+            if (token != null && role != null && refreshToken != null)
             {
-                string role = SessionHelper.GetObjectFromJson<string>(HttpContext.Session, "role");
                 if (role.Equals("Student") || role.Equals("Lecturer"))
                 {
                     if (ModelState.IsValid)
@@ -56,14 +83,46 @@ namespace PRN231.CPR.Page.Pages.StudentPages
                         if (userDisplayPic != null && userDisplayPic.Length > 0)
                         {
                             HttpResponseMessage response = SendDataHelper<IFormFile>.PostFile($"https://localhost:7298/api/files", userDisplayPic, token).Result;
-                            if (response.IsSuccessStatusCode)
+                            if (response.IsSuccessStatusCode) Account.Avatar = await response.Content.ReadAsStringAsync();
+                            else
                             {
-                                string data = await response.Content.ReadAsStringAsync();
-                                Account.Avatar = data;
+                                HttpResponseMessage responseMes = SendDataHelper<AccountResponse>.PostData($"https://localhost:7298/token-verification?Token={token}&RefreshToken={refreshToken}", null, null).Result;
+                                if (responseMes.IsSuccessStatusCode)
+                                {
+                                    string data = await responseMes.Content.ReadAsStringAsync();
+                                    var options = new JsonSerializerOptions
+                                    {
+                                        PropertyNameCaseInsensitive = true,
+                                    };
+                                    var customer = System.Text.Json.JsonSerializer.Deserialize<AccountResponse>(data, options);
+                                    Account = mapper.Map<UpdateAccountRequest>(customer);
+                                    SessionHelper.SetObjectAsJson(HttpContext.Session, "jwt", customer.Token);
+                                    SessionHelper.SetObjectAsJson(HttpContext.Session, "refreshToken", customer.RefreshToken);
+                                    RedirectToPage("/StudentPages/Edit");
+                                }
+                                else return RedirectToPage("/Index");
                             }
                         }
                         HttpResponseMessage responseMessage = SendDataHelper<UpdateAccountRequest>.PutData($"https://localhost:7298/odata/Accounts/{Account.Id}", Account, token).Result;
                         if (responseMessage.IsSuccessStatusCode) return RedirectToPage("/StudentPages/Edit");
+                        if(responseMessage.StatusCode.ToString()== "Unauthorized")
+                        {
+                            HttpResponseMessage responseMes = SendDataHelper<AccountResponse>.PostData($"https://localhost:7298/token-verification?Token={token}&RefreshToken={refreshToken}", null, null).Result;
+                            if (responseMes.IsSuccessStatusCode)
+                            {
+                                string data = await responseMes.Content.ReadAsStringAsync();
+                                var options = new JsonSerializerOptions
+                                {
+                                    PropertyNameCaseInsensitive = true,
+                                };
+                                var customer = System.Text.Json.JsonSerializer.Deserialize<AccountResponse>(data, options);
+                                Account = mapper.Map<UpdateAccountRequest>(customer);
+                                SessionHelper.SetObjectAsJson(HttpContext.Session, "jwt", customer.Token);
+                                SessionHelper.SetObjectAsJson(HttpContext.Session, "refreshToken", customer.RefreshToken);
+                                RedirectToPage("/StudentPages/Edit");
+                            }
+                            else return RedirectToPage("/Index");
+                        }
                         else
                         {
 
@@ -79,10 +138,10 @@ namespace PRN231.CPR.Page.Pages.StudentPages
                     }
                     return Page();
                 }
-                return RedirectToPage("/AdminDashboard");
+               else return RedirectToPage("/AdminDashboard");
 
             }
-            else return RedirectToPage("/HomePage");
+            else return RedirectToPage("/Index");
         }
     }
     }
