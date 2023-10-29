@@ -1,0 +1,232 @@
+﻿@page
+@model PRN231.CPR.Page.Pages.StudentPages.ListTopicModel
+@{
+    Layout = "../Shared/_LayoutHome.cshtml";
+
+}
+<body class="topics-listing-page" id="top">
+
+    <main>
+
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" asp-page="/StudentPage/HomePage">
+                    <img class="logo-img" src="https://feid.fpt.edu.vn/FPT_Education_logo.svg"
+                </a>
+
+                <div class="d-lg-none ms-auto me-4">
+                    <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
+                </div>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-lg-5 me-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="/StudentPages/HomePage">Home</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="/StudentPages/ListTopic">Browse Topics</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="#section_3">Create Group Project</a>
+                        </li>
+
+
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
+
+                            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                                <li><a class="dropdown-item" href="/StudentPages/ListTopic">Topics Listing</a></li>
+
+                               
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div class="d-none d-lg-block">
+                        <a href="#top" class="">
+                            <img class="icon-img" src="https://cdn-icons-png.flaticon.com/512/56/56805.png" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+
+        <header class="site-header d-flex flex-column justify-content-center align-items-center">
+            <div class="container">
+                <div class="row align-items-center">
+
+                    <div class="col-lg-5 col-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/StudentPages/HomePage">Homepage</a></li>
+
+                                <li class="breadcrumb-item active" aria-current="page">Topics Listing</li>
+                            </ol>
+                        </nav>
+
+                        <h2 class="text-white">Topics Listing</h2>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+
+
+        <section class="section-padding">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-12 col-12 text-center">
+                        <h3 class="mb-4">Popular Topics</h3>
+                    </div>
+
+                    <div class="col-lg-8 col-12 mt-3 mx-auto">
+                        @foreach(var item in Model.Topics)
+                        {
+                                 <div class="custom-block custom-block-topics-listing bg-white shadow-lg mb-5">
+                                <div class="d-flex">
+                                        <img src="https://edu.hoteljob.vn/uploads/images/20-07-16-11/0ff34c8e8581ef7b5ee4d5caedf9bf7a.png" class="custom-block-image img-fluid" alt="">
+
+                                    <div class="custom-block-topics-listing-info d-flex">
+                                        <div>
+                                            <h5 class="mb-2">@Html.DisplayFor(modelItem => item.Name)</h5>
+
+                                             <p class="mb-0">@Html.DisplayFor(modelItem => item.Description)</p>
+                                              <p class="mb-0">Semester : @Html.DisplayFor(modelItem => item.SemesterCode)</p>
+                                            <a href="topics-detail.html" class="btn custom-btn mt-3 mt-lg-4">Choose</a>
+                                        </div>
+
+                                        <span class="badge bg-design rounded-pill ms-auto">14</span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        
+                    </div>
+
+                    <div class="col-lg-12 col-12">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center mb-0">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">Prev</span>
+                                    </a>
+                                </li>
+
+                                <li class="page-item active" aria-current="page">
+                                    <a class="page-link" href="#">1</a>
+                                </li>
+
+                                <li class="page-item">
+                                    <a class="page-link" href="#">2</a>
+                                </li>
+
+                                <li class="page-item">
+                                    <a class="page-link" href="#">3</a>
+                                </li>
+
+                                <li class="page-item">
+                                    <a class="page-link" href="#">4</a>
+                                </li>
+
+                                <li class="page-item">
+                                    <a class="page-link" href="#">5</a>
+                                </li>
+
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true">Next</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+
+    </main>
+
+    <footer class="site-footer section-padding">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-3 col-12 mb-4 pb-2">
+                    <a class="navbar-brand" asp-page="/StudentPage/HomePage">
+                        <img class="logo-img" src="https://feid.fpt.edu.vn/FPT_Education_logo.svg"
+                    </a>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-6">
+                    <h6 class="site-footer-title mb-3">Resources</h6>
+
+                    <ul class="site-footer-links">
+                        <li class="site-footer-link-item">
+                            <a href="#" class="site-footer-link">Home</a>
+                        </li>
+
+                        <li class="site-footer-link-item">
+                            <a href="#" class="site-footer-link">How it works</a>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-6 mb-4 mb-lg-0">
+                    <h6 class="site-footer-title mb-3">Information</h6>
+
+                    <p class="text-white d-flex mb-1">
+                        <a href="tel: 0835537718" class="site-footer-link">
+                            08-3553-7718
+                        </a>
+                    </p>
+
+                    <p class="text-white d-flex">
+                        <a href="mailto:info@company.com" class="site-footer-link">
+                            info@company.com
+                        </a>
+                    </p>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-12 mt-4 mt-lg-0 ms-auto">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            English
+                        </button>
+
+                        <ul class="dropdown-menu">
+                            <li><button class="dropdown-item" type="button">Thai</button></li>
+
+                            <li><button class="dropdown-item" type="button">Myanmar</button></li>
+
+                            <li><button class="dropdown-item" type="button">Arabic</button></li>
+                        </ul>
+                    </div>
+
+                    <p class="copyright-text mt-lg-5 mt-4">
+                        Copyright © 2048 Topic Listing Center. All rights reserved.
+
+                    </p>
+
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+
+
+</body>

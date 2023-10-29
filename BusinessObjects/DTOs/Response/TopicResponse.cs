@@ -17,5 +17,16 @@ namespace BusinessObjects.DTOs.Response
         public int SemesterId { get; set; }
         public string SpecializationName { get; set; } = null!;
         public virtual ICollection<TopicOfLecturerResponse> TopicOfLecturers { get; set; }
+
+        public TopicResponse(int id, string name, string? description, bool? status, string semesterCode, int semesterId, string specializationName)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+            Status = status;
+            SemesterCode = semesterCode;
+            SemesterId = semesterId;
+            SpecializationName = specializationName;
+        }
     }
 }
