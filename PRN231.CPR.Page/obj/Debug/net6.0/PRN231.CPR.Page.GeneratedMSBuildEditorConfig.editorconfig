@@ -5,60 +5,61 @@ build_property.UsingMicrosoftNETSdkWeb = true
 build_property.ProjectTypeGuids = 
 build_property.InvariantGlobalization = 
 build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = PRN231.CPR.Page
 build_property.RootNamespace = PRN231.CPR.Page
-build_property.ProjectDir = D:\CapstoneProjectRequired_PRN231\PRN231.CPR.Page\
+build_property.ProjectDir = D:\down\fptu\ki8\prn231\project\cpr-new\PRN231.CPR.Page\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\CapstoneProjectRequired_PRN231\PRN231.CPR.Page
+build_property.MSBuildProjectDirectory = D:\down\fptu\ki8\prn231\project\cpr-new\PRN231.CPR.Page
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/CapstoneProjectRequired_PRN231/PRN231.CPR.Page/Pages/AccountRecovery.cshtml]
+[D:/down/fptu/ki8/prn231/project/cpr-new/PRN231.CPR.Page/Pages/AccountRecovery.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFJlY292ZXJ5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/CapstoneProjectRequired_PRN231/PRN231.CPR.Page/Pages/Error.cshtml]
+[D:/down/fptu/ki8/prn231/project/cpr-new/PRN231.CPR.Page/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/CapstoneProjectRequired_PRN231/PRN231.CPR.Page/Pages/Index.cshtml]
+[D:/down/fptu/ki8/prn231/project/cpr-new/PRN231.CPR.Page/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/CapstoneProjectRequired_PRN231/PRN231.CPR.Page/Pages/Privacy.cshtml]
+[D:/down/fptu/ki8/prn231/project/cpr-new/PRN231.CPR.Page/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/CapstoneProjectRequired_PRN231/PRN231.CPR.Page/Pages/Shared/_LayoutHome.cshtml]
+[D:/down/fptu/ki8/prn231/project/cpr-new/PRN231.CPR.Page/Pages/Shared/_LayoutHome.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXRIb21lLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/CapstoneProjectRequired_PRN231/PRN231.CPR.Page/Pages/Shared/_Login.cshtml]
+[D:/down/fptu/ki8/prn231/project/cpr-new/PRN231.CPR.Page/Pages/Shared/_Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9Mb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/CapstoneProjectRequired_PRN231/PRN231.CPR.Page/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[D:/down/fptu/ki8/prn231/project/cpr-new/PRN231.CPR.Page/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/CapstoneProjectRequired_PRN231/PRN231.CPR.Page/Pages/StudentPages/Edit.cshtml]
+[D:/down/fptu/ki8/prn231/project/cpr-new/PRN231.CPR.Page/Pages/StudentPages/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudFBhZ2VzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/CapstoneProjectRequired_PRN231/PRN231.CPR.Page/Pages/StudentPages/HomePage.cshtml]
+[D:/down/fptu/ki8/prn231/project/cpr-new/PRN231.CPR.Page/Pages/StudentPages/HomePage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudFBhZ2VzXEhvbWVQYWdlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/CapstoneProjectRequired_PRN231/PRN231.CPR.Page/Pages/_ViewImports.cshtml]
+[D:/down/fptu/ki8/prn231/project/cpr-new/PRN231.CPR.Page/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/CapstoneProjectRequired_PRN231/PRN231.CPR.Page/Pages/_ViewStart.cshtml]
+[D:/down/fptu/ki8/prn231/project/cpr-new/PRN231.CPR.Page/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/CapstoneProjectRequired_PRN231/PRN231.CPR.Page/Pages/Shared/_Layout.cshtml]
+[D:/down/fptu/ki8/prn231/project/cpr-new/PRN231.CPR.Page/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-3h53yxn77p

@@ -71,11 +71,11 @@
                         </li>
 
                         <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="music-tab" data-bs-toggle="tab" data-bs-target="#music-tab-pane" type="button" role="tab" aria-controls="music-tab-pane" aria-selected="false">Information System</button>
+                        <button  class="nav-link" id="music-tab" data-bs-toggle="tab" data-bs-target="#music-tab-pane" type="button" role="tab" aria-controls="music-tab-pane" aria-selected="false">Information System</button>
                         </li>
 
                         <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="education-tab" data-bs-toggle="tab" data-bs-target="#education-tab-pane" type="button" role="tab" aria-controls="education-tab-pane" aria-selected="false">Digital Art & Design</button>
+                        <button  class="nav-link" id="education-tab" data-bs-toggle="tab" data-bs-target="#education-tab-pane" type="button" role="tab" aria-controls="education-tab-pane" aria-selected="false">Digital Art & Design</button>
                         </li>
                     </ul>
                 </div>
@@ -90,7 +90,7 @@
                                 <div class="row">
                                     
                                         <div class="custom-block bg-white shadow-lg">
-                                            <a href="topics-detail.html">
+                                    <a asp-page="/StudentPages/ListTopic">
                                                 <div class="d-flex">
                                                     <div>
                                                     <h5 class="mb-2">Software Engineering</h5>
@@ -113,7 +113,7 @@
                             <div class="tab-pane fade" id="marketing-tab-pane" role="tabpanel" aria-labelledby="marketing-tab" tabindex="0">
                                 <div class="row">
                                     <div class="custom-block bg-white shadow-lg">
-                                    <a href="topics-detail.html">
+                                    <a asp-page="/StudentPages/ListTopic">
                                         <div class="d-flex">
                                             <div>
                                                 <h5 class="mb-2">Information Assurance</h5>
@@ -133,7 +133,7 @@
                             <div class="tab-pane fade" id="finance-tab-pane" role="tabpanel" aria-labelledby="finance-tab" tabindex="0">
                             <div class="row">
                                 <div class="custom-block bg-white shadow-lg">
-                                    <a href="topics-detail.html">
+                                    <a asp-page="/StudentPages/ListTopic">
                                         <div class="d-flex">
                                             <div>
                                                 <h5 class="mb-2">Artificial Intelligence</h5>
@@ -152,7 +152,7 @@
                             <div class="tab-pane fade" id="music-tab-pane" role="tabpanel" aria-labelledby="music-tab" tabindex="0">
                                 <div class="row">
                                 <div class="custom-block bg-white shadow-lg">
-                                    <a href="topics-detail.html">
+                                    <a asp-page="/StudentPages/ListTopic">
                                         <div class="d-flex">
                                             <div>
                                                 <h5 class="mb-2">Information System</h5>
@@ -171,7 +171,7 @@
                             <div class="tab-pane fade" id="education-tab-pane" role="tabpanel" aria-labelledby="education-tab" tabindex="0">
                                 <div class="row">
                                 <div class="custom-block bg-white shadow-lg">
-                                    <a href="topics-detail.html">
+                                    <a asp-page="/StudentPages/ListTopic">
                                         <div class="d-flex">
                                             <div>
                                                 <h5 class="mb-2">Digital Art & Design</h5>
@@ -211,19 +211,20 @@
                                 </div>
 
                                 <li>
-                                    <h4 class="text-white mb-3">Search your favourite topic</h4>
+                                <h4 class="text-white mb-3">Create group project</h4>
 
-                                <p class="text-white">Search for topics with requirements that match your major</p>
+                                <p class="text-white"> Create a group with the selected topic, then add group members (3-5 people)</p>
 
+                                   
                                     <div class="icon-holder">
                                     <h3>1</h3>
                                 </div>
                                 </li>
 
                                 <li>
-                                    <h4 class="text-white mb-3">Create group project</h4>
+                                <h4 class="text-white mb-3">Search your favourite topic</h4>
 
-                                <p class="text-white"> Create a group with the selected topic, then add group members (3-5 people)</p>
+                                <p class="text-white">Search for topics with requirements that match your major</p>
 
                                     <div class="icon-holder">
                                        <h3>2</h3>
@@ -248,7 +249,7 @@
                     <div class="col-12 text-center mt-5">
                         <p class="text-white">
                         Have not a group project yet
-                        <a href="#" class="btn custom-btn custom-border-btn ms-3">Create group now</a>
+                        <a asp-page="/StudentPage/CreateGroup" class="btn custom-btn custom-border-btn ms-3">Create group now</a>
                         </p>
                     </div>
                 </div>
