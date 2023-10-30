@@ -17,5 +17,7 @@ namespace BusinessObjects.DTOs.Response
         public int SemesterId { get; set; }
         public string SpecializationName { get; set; } = null!;
         public virtual ICollection<TopicOfLecturerResponse> TopicOfLecturers { get; set; }
+
+     
     }
 }

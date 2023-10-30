@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\CapstoneProjectRequired_PRN231\\Repository\\Repository.csproj": {}
+    "D:\\down\\fptu\\ki8\\prn231\\project\\cpr-new\\Repository\\Repository.csproj": {}
   },
   "projects": {
-    "D:\\CapstoneProjectRequired_PRN231\\BusinessObjects\\BusinessObjects.csproj": {
+    "D:\\down\\fptu\\ki8\\prn231\\project\\cpr-new\\BusinessObjects\\BusinessObjects.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CapstoneProjectRequired_PRN231\\BusinessObjects\\BusinessObjects.csproj",
+        "projectUniqueName": "D:\\down\\fptu\\ki8\\prn231\\project\\cpr-new\\BusinessObjects\\BusinessObjects.csproj",
         "projectName": "BusinessObjects",
-        "projectPath": "D:\\CapstoneProjectRequired_PRN231\\BusinessObjects\\BusinessObjects.csproj",
-        "packagesPath": "C:\\Users\\Hoang Anh\\.nuget\\packages\\",
-        "outputPath": "D:\\CapstoneProjectRequired_PRN231\\BusinessObjects\\obj\\",
+        "projectPath": "D:\\down\\fptu\\ki8\\prn231\\project\\cpr-new\\BusinessObjects\\BusinessObjects.csproj",
+        "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
+        "outputPath": "D:\\down\\fptu\\ki8\\prn231\\project\\cpr-new\\BusinessObjects\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Hoang Anh\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -145,25 +141,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\CapstoneProjectRequired_PRN231\\DataAccess\\DataAccess.csproj": {
+    "D:\\down\\fptu\\ki8\\prn231\\project\\cpr-new\\DataAccess\\DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CapstoneProjectRequired_PRN231\\DataAccess\\DataAccess.csproj",
+        "projectUniqueName": "D:\\down\\fptu\\ki8\\prn231\\project\\cpr-new\\DataAccess\\DataAccess.csproj",
         "projectName": "DataAccess",
-        "projectPath": "D:\\CapstoneProjectRequired_PRN231\\DataAccess\\DataAccess.csproj",
-        "packagesPath": "C:\\Users\\Hoang Anh\\.nuget\\packages\\",
-        "outputPath": "D:\\CapstoneProjectRequired_PRN231\\DataAccess\\obj\\",
+        "projectPath": "D:\\down\\fptu\\ki8\\prn231\\project\\cpr-new\\DataAccess\\DataAccess.csproj",
+        "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
+        "outputPath": "D:\\down\\fptu\\ki8\\prn231\\project\\cpr-new\\DataAccess\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Hoang Anh\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -177,8 +169,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\CapstoneProjectRequired_PRN231\\BusinessObjects\\BusinessObjects.csproj": {
-                "projectPath": "D:\\CapstoneProjectRequired_PRN231\\BusinessObjects\\BusinessObjects.csproj"
+              "D:\\down\\fptu\\ki8\\prn231\\project\\cpr-new\\BusinessObjects\\BusinessObjects.csproj": {
+                "projectPath": "D:\\down\\fptu\\ki8\\prn231\\project\\cpr-new\\BusinessObjects\\BusinessObjects.csproj"
               }
             }
           }
@@ -294,25 +286,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\CapstoneProjectRequired_PRN231\\Repository\\Repository.csproj": {
+    "D:\\down\\fptu\\ki8\\prn231\\project\\cpr-new\\Repository\\Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CapstoneProjectRequired_PRN231\\Repository\\Repository.csproj",
+        "projectUniqueName": "D:\\down\\fptu\\ki8\\prn231\\project\\cpr-new\\Repository\\Repository.csproj",
         "projectName": "Repository",
-        "projectPath": "D:\\CapstoneProjectRequired_PRN231\\Repository\\Repository.csproj",
-        "packagesPath": "C:\\Users\\Hoang Anh\\.nuget\\packages\\",
-        "outputPath": "D:\\CapstoneProjectRequired_PRN231\\Repository\\obj\\",
+        "projectPath": "D:\\down\\fptu\\ki8\\prn231\\project\\cpr-new\\Repository\\Repository.csproj",
+        "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
+        "outputPath": "D:\\down\\fptu\\ki8\\prn231\\project\\cpr-new\\Repository\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Hoang Anh\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -326,8 +314,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\CapstoneProjectRequired_PRN231\\DataAccess\\DataAccess.csproj": {
-                "projectPath": "D:\\CapstoneProjectRequired_PRN231\\DataAccess\\DataAccess.csproj"
+              "D:\\down\\fptu\\ki8\\prn231\\project\\cpr-new\\DataAccess\\DataAccess.csproj": {
+                "projectPath": "D:\\down\\fptu\\ki8\\prn231\\project\\cpr-new\\DataAccess\\DataAccess.csproj"
               }
             }
           }
@@ -443,7 +431,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }
