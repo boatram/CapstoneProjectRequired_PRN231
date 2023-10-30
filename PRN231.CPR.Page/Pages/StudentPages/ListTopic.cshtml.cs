@@ -2,6 +2,7 @@ using BusinessObjects.DTOs.Response;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using PRN231.CPR.Page.Helper;
 using System.Net.Http.Headers;
 
 namespace PRN231.CPR.Page.Pages.StudentPages
@@ -20,21 +21,26 @@ namespace PRN231.CPR.Page.Pages.StudentPages
         }
         public async Task<IActionResult> OnGet()
         {
-            Topics.Add(new TopicResponse(1, "topic1", "1", true, "fall2023", 3, "se"));
+  
             try
             {
-                HttpResponseMessage response = await _httpClient.GetAsync(UrlApi);
-                if (response.IsSuccessStatusCode)
+                var topics = SendDataHelper<TopicResponse>.GetListData(UrlApi,null).Result;
+                foreach(TopicResponse topic in topics)
                 {
-                    var responseContent = await response.Content.ReadAsStringAsync();
-                    Topics = JsonConvert.DeserializeObject<List<TopicResponse>>(responseContent);
+                    Topics.Add(topic);
+                }
+               // HttpResponseMessage response = await _httpClient.GetAsync(UrlApi);
+              //  if (response.IsSuccessStatusCode)
+               // {
+               //     var responseContent = await response.Content.ReadAsStringAsync();
+              //      Topics = JsonConvert.DeserializeObject<List<TopicResponse>>(responseContent);
 
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Failed to get topic information");
-                    return NotFound();
-                }
+              //  }
+               // else
+               // {
+                //    ModelState.AddModelError(string.Empty, "Failed to get topic information");
+              //      return NotFound();
+              //  }
             }
             catch (Exception ex)
             {
