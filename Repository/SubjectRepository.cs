@@ -59,6 +59,7 @@ namespace Repository
                                     var spec = specializationRepository.GetSpecializations().Where(a => a.Code.Equals(subject.SpecializationCode)).SingleOrDefault();
                                     if (spec==null)
                                         throw new CrudException(HttpStatusCode.NotFound, "Specialiazation not found !!!", "");
+                                    if (spec.Status == false) throw new CrudException(HttpStatusCode.BadRequest, "Specialiazation is not available !!!", "");
                                     sub.Status = true;
                                     sub.SpecializationId = spec.Id;
                                     SubjectDAO.Instance.Create(sub);
@@ -102,7 +103,8 @@ namespace Repository
         {
             try
             {
-                return mapper.Map<List<SubjectResponse>>(SubjectDAO.Instance.GetSubjects().ToList());
+                var rs= (SubjectDAO.Instance.GetSubjects().ToList());
+                return mapper.Map<List<SubjectResponse>>(rs);
             }
             catch (Exception ex)
             {

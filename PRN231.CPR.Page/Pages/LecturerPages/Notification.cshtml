@@ -1,0 +1,72 @@
+﻿@page
+@model PRN231.CPR.Page.Pages.LecturerPages.NotificationModel
+@{
+	Layout = "../Shared/_LayoutHome.cshtml";
+
+}
+<div class="container" style="padding:64px">
+	<div class="main-content-account">
+		<div class="row pt-4">
+			<div class="col-6">
+				<h2 class="text-primary">Notification </h2>
+			</div>
+		</div>
+		<br /><br />
+		<table class="table table-bordered table-striped" style="table-layout: auto">
+			<thead>
+				<tr>
+					<th>
+						Nam Group Project
+					</th>
+					<th>
+						Topic
+					</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@if (Model.GroupProjectResponses != null && Model.GroupProjectResponses.Count() > 0)
+				{
+
+					@foreach (var staff in Model.GroupProjectResponses)
+					{
+						<tr>
+							<td>@staff.Name</td>
+							@foreach(var topic in staff.TopicOfGroups){
+								<td>topic.Name</td>
+								@if(topic.Status==null){
+								<td>	<a asp-page="/LecturerPages/Notification" asp-page-handler="update" asp-route-groupId="@staff.Id" asp-route-topicId="@topic.TopicId" class="btn btn-primary mx-2">
+										<i class="bi bi-person-x-fill"></i> Accept
+									</a>
+									</td>
+								}
+							}
+						</tr>
+					}
+				}
+			</tbody>
+		</table>
+		@if (Model.GroupProjectResponses != null && Model.GroupProjectResponses.Count() > 0)
+		{
+
+			var prevDisabled = !Model.GroupProjectResponses.HasPreviousPage ? "disabled" : "";
+			var nextDisabled = !Model.GroupProjectResponses.HasNextPage ? "disabled" : "";
+
+			<a asp-page="/LecturerPages/Index"
+		   asp-route-sortOrder="@Model.CurrentSort"
+		   asp-route-pageIndex="@(Model.GroupProjectResponses.PageIndex - 1)"
+		   asp-route-currentFilter="@Model.CurrentFilter"
+		   class="btn btn-primary @prevDisabled">
+				Previous
+			</a>
+
+			<a asp-page="/LecturerPages/Index"
+		   asp-route-sortOrder="@Model.CurrentSort"
+		   asp-route-pageIndex="@(Model.GroupProjectResponses.PageIndex + 1)"
+		   asp-route-currentFilter="@Model.CurrentFilter"
+		   class="btn btn-primary @nextDisabled">
+				Next
+			</a>
+		}
+	</div>
+</div>

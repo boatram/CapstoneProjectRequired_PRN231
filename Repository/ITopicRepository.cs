@@ -1,4 +1,5 @@
-﻿using BusinessObjects.DTOs;
+﻿using BusinessObjects.BusinessObjects;
+using BusinessObjects.DTOs;
 using BusinessObjects.DTOs.Request;
 using BusinessObjects.DTOs.Response;
 using Microsoft.AspNetCore.Http;
@@ -14,7 +15,8 @@ namespace Repository
     public interface ITopicRepository
     {
         Task<IEnumerable<TopicResponse>> GetTopics();
-        Task<List<TopicResponse>> Create(IFormFile file);
+        Task<List<TopicResponse>> Create(IFormFile file, int id);
         void UpdateStatus(int Id);
+        Task<TopicResponse> Update(int topicId, int topicid);
     }
 }

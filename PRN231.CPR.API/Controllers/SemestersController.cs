@@ -22,43 +22,40 @@ namespace PRN231.CPR.API.Controllers
         }
 
         // GET: api/<SemesterController>
+
+
+
+        [Authorize]
         [EnableQuery]
-        public async Task<ActionResult<IEnumerable<SemesterResponse>>> Get()
+        public async Task<ActionResult<List<SemesterResponse>>> GetSemesters()
         {
-            var ss = semesterRepository.GetSemesters();
+            var ss = await semesterRepository.GetSemesters();
             if (ss == null)
                 return NotFound();
             return Ok(ss);
         }
 
         // GET api/<SemesterController>/5
-        public async Task<ActionResult<Semester>> Get(int key)
+        public async Task<ActionResult<Semester>> GetSemesterById(int key)
         {
             if (key == 0) return NotFound();
             var s = semesterRepository.GetSemesterByID(key);
             return Ok(s);
         }
-
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Post([FromBody] SemesterRequest value)
         {
-            if (value != null)
+            if (ModelState.IsValid)
             {
-                semesterRepository.Create(value);
-                return Ok();
+                var rs = await semesterRepository.CreateSemester(value);
+                return Ok(rs);
             }
-            return BadRequest();
-        }
-
-        // PUT api/<SemesterController>/5
-        [HttpPut]
-        public async Task<ActionResult> Put(int key)
-        {
-            if (key == 0) return NotFound();
-            semesterRepository.Update(key);
+            else return new BadRequestObjectResult(ModelState);
             return Ok();
         }
         [AllowAnonymous]
         [HttpPost("student-in-semester")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<StudentInSemesterResponse>> CreateStudentInSemester(IFormFile file)
         {
             var rs = await semesterRepository.CreateStudentInSemester(file);

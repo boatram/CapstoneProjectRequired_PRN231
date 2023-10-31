@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Repository;
 using static Repository.Helpers.Enum;
+using Microsoft.AspNetCore.OData.Query;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,31 +21,18 @@ namespace PRN231.CPR.API.Controllers
         {
             subjectRepository = repository;
         }
-
-
-        // GET: api/<SubjectController>/5
-        [Route("api/Subjects/Prerequisite/{id}")]
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<SubjectResponse>>> GetSubjectIsPrerequisite(int id)
+        
+        [Authorize]
+        [EnableQuery]
+        public async Task<ActionResult<IEnumerable<SubjectResponse>>> GetSubjects()
         {
-            var ss = subjectRepository.GetSubjectIsPrerequisite((int)id);
-            if (ss == null)
-                return NotFound();
-            return Ok(ss);
-        }
-
-
-        // GET api/<SubjectController>/5
-        [Route("api/Subjects/Specialization/{id}")]
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<SubjectResponse>>> GetSubjects(int id)
-        {
-            var ss = subjectRepository.GetSubjectBySpecializationId(id);
+            var ss = await subjectRepository.GetSubjects();
             if (ss == null)
                 return NotFound();
             return Ok(ss);
         }
         [HttpPost()]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<SubjectResponse>>Post(IFormFile file)
         {
             var rs = await subjectRepository.Create(file);

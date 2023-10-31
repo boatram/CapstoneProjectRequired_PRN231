@@ -15,7 +15,6 @@ namespace Repository
     public interface IAccountRepository
     {
         Task<List<AccountResponse>> GetAccounts();
-        Task<AccountResponse> GetToUpdateStatus(int id);
         Task<dynamic> CreateMailMessage(string email);
         Task<AccountResponse> Login(LoginRequest request);
         Task<List<AccountResponse>> CreateAccount(IFormFile file, ExcelChoice choice);

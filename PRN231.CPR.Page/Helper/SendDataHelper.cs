@@ -1,10 +1,13 @@
 ﻿
+using BusinessObjects.DTOs.Response;
 using Firebase.Auth;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using NuGet.Protocol;
+using OfficeOpenXml.FormulaParsing.Excel.Functions;
 using System.Collections;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -92,6 +95,51 @@ namespace PRN231.CPR.Page.Helper
             _httpClient.DefaultRequestHeaders.Accept.Add(contentType);
             HttpResponseMessage responseMessage = await _httpClient.DeleteAsync(url);
             return responseMessage;
+        }
+        public static async Task<AccountResponse> GetRefreshToken(string token, string refreshToken) 
+        { 
+            HttpResponseMessage responseMessage = SendDataHelper<AccountResponse>.PostData($"https://localhost:7298/token-verification?Token={token}&RefreshToken={refreshToken}", null, null).Result;
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                string data = await responseMessage.Content.ReadAsStringAsync();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                };
+                return System.Text.Json.JsonSerializer.Deserialize<AccountResponse>(data, options);
+            }
+            return null;
+
+        }
+        public static async Task<IList<T>> GetListDataNoOData(string url, string? token)
+        {
+            HttpClient client = new HttpClient();
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            HttpResponseMessage response = await client.SendAsync(request);
+            string strData = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+            };
+            if (response.StatusCode.ToString() != "Forbidden")
+                return JsonSerializer.Deserialize<IList<T>>(strData, options);
+            else return null;
+        }
+        public static async Task<T> GetDataNoOData(string url, string? token)
+        {
+            HttpClient client = new HttpClient();
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            HttpResponseMessage response = await client.SendAsync(request);
+            string strData = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+            };
+            if (response.StatusCode.ToString() != "Forbidden")
+                return JsonSerializer.Deserialize<T>(strData, options);
+            else return null;
         }
     }
 }

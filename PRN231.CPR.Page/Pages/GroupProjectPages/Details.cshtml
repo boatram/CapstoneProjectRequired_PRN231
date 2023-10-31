@@ -1,0 +1,105 @@
+﻿@page
+@model PRN231.CPR.Page.Pages.GroupProjectPages.DetailsModel
+@{
+	Layout = "../Shared/_LayoutHome.cshtml";
+
+}
+<div class="container" style="padding:64px">
+		<div class="main-content-account">
+	<div class="row pt-4">
+		<div class="col-6">
+			<h2 class="text-primary"> Group Project Detail </h2>
+		</div>		
+	</div>
+		<dl class="row">
+			<dt class="col-sm-2">
+				Name
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.GroupProject.Name)
+			</dd>
+			<dt class="col-sm-2" style="font-size:larger; color: blueviolet">
+				Student In Group
+			</dt>
+			<table class="table table-bordered table-striped" style="width:100%">
+				<thead>
+					<tr>
+						<th>
+							Student Name
+						</th>
+						<th>
+							Join Date
+						</th>
+
+						<th>
+							Role
+						</th>
+						<th>
+							Description
+						</th>
+						<th>
+							Position
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model.GroupProject.StudentInGroups)
+					{
+						<tr>
+							<td>@item.StudentName</td>
+							<td>@item.JoinDate</td>
+
+							<td>@item.Role</td>
+							<td>@item.Description</td>
+							
+							@if(item.Status==true)
+						{	<td>
+								Leader
+							</td>
+						}
+							else 
+							{
+								<td>
+									Member
+								</td>
+							}
+						</tr>
+
+					}
+
+				</tbody>
+			</table>
+			<dt class="col-sm-2" style="font-size:larger; color: darkblue">
+				Topic Of Group
+			</dt>
+			<table class="table table-bordered table-striped" style="width:100%">
+				<thead>
+					<tr>
+						<th>
+							Name
+						</th>
+						<th>
+							Semester Code
+						</th>
+						<th>
+							Specialization Name
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model.GroupProject.TopicOfGroups)
+					{
+						<tr>
+							<td>@item.TopicName</td>
+							<td>@item.SemesterCode</td>
+							<td>@item.SpecializationName</td>
+						</tr>
+
+					}
+
+				</tbody>
+			</table>
+		</dl>
+		<a asp-page="/GroupProjectPages/Index" class="btn btn-secondary" style="width:150px;"> Back To List</a>
+	</div>
+	</div>

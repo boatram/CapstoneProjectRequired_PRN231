@@ -4,6 +4,7 @@ using BusinessObjects.BusinessObjects;
 using BusinessObjects.DTOs.Request;
 using BusinessObjects.DTOs.Response;
 using DataAccess;
+using Hangfire;
 using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 using Repository.Exceptions;
@@ -30,14 +31,74 @@ namespace Repository
             this.subjectRepository = subjectRepository;
         }
 
-        public void Create(SemesterRequest semester) => SemesterDAO.Instance.Create(semester);
+        public async Task<SemesterResponse> CreateSemester(SemesterRequest request)
+        {
+            try
+            {
+                var semester = _mapper.Map<SemesterRequest,Semester>(request);
+                var s = SemesterDAO.Instance.GetSemesters().Where(a => a.Code.Equals(request.Code)).SingleOrDefault();
+                if (s != null)
+                {
+                    throw new CrudException(HttpStatusCode.BadRequest, $"Code {request.Code} has already !!!","");
+                }
+                if (SemesterDAO.Instance.GetSemesters().Where(a => a.StartDate <= request.StartDate && a.EndDate >= request.StartDate
+                   || a.EndDate >= request.EndDate && a.StartDate <= request.EndDate 
+                   || a.StartDate >= request.StartDate && a.EndDate <= request.EndDate
+                   || a.StartDate <= request.StartDate && request.EndDate <= a.EndDate
+                   ).SingleOrDefault() != null) throw new CrudException(HttpStatusCode.BadRequest, $"The semester has already from {request.StartDate} to {request.EndDate} ","");
+                SemesterDAO.Instance.AddNew(semester);
+               var datespan = (request.StartDate.Value.Date - DateTime.Now.Date).TotalHours;
+                BackgroundJob.Schedule(() =>
+                    AutoUpdateStatusSemester(request.Code),
+                            TimeSpan.FromHours(datespan));
+                return _mapper.Map<SemesterResponse>(semester);
+            }
+            catch (CrudException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw new CrudException(HttpStatusCode.BadRequest, "Register Error!!!","");
+            }
+        }
+        public async Task AutoUpdateStatusSemester(string code)
+        {
+            var semester = SemesterDAO.Instance.GetSemesters();
+            if (semester != null)
+            {
+                foreach (var s in semester)
+                {
+                    if (s.Code == code)
+                    {
+                        s.Status = true;
+                        SemesterDAO.Instance.Update(s.Id,s);
+                    }
+                    else
+                    {
+                        s.Status = false;
+                        SemesterDAO.Instance.Update(s.Id,s);
+                    }
+                }
 
+            }
+        }
         public Semester GetSemesterByID(int? Id) => SemesterDAO.Instance.GetSemesterByID(Id);
 
-        public void Update(int Id) => SemesterDAO.Instance.Update(Id);
-     
-
-        IEnumerable<SemesterResponse> ISemesterRepository.GetSemesters() => SemesterDAO.Instance.GetSemesters();
+        
+        public async Task<List<SemesterResponse>> GetSemesters()
+        {
+            try
+            {
+                var rs = (SemesterDAO.Instance.GetSemesters().ToList());
+                return _mapper.Map<List<SemesterResponse>>(rs);
+            }
+            catch (Exception ex)
+            {
+                throw new CrudException(HttpStatusCode.BadRequest, "Get list semester error!!!!!", ex.Message);
+            }
+        }
+        
         public async Task<List<StudentInSemesterResponse>> CreateStudentInSemester(IFormFile file)
         {
             try
@@ -64,17 +125,20 @@ namespace Repository
                                     {
                                         throw new CrudException(HttpStatusCode.NotFound, "Student not found !!!", "");
                                     }
+                                    if (s.Status == 0) throw new CrudException(HttpStatusCode.BadRequest, $"Student {s.Code} has been blocked !!!", "");
                                     var semester = SemesterDAO.Instance.GetSemesters().Where(s => s.Code == account.SemesterCode).SingleOrDefault();
                                     if (semester == null)
                                     {
                                         throw new CrudException(HttpStatusCode.NotFound, "Semester not found !!!", "");
                                     }
+                                    if (semester.Status !=null && semester.Status == false) throw new CrudException(HttpStatusCode.BadRequest, $"Semester {semester.Code} has finished, please enter the current semester !!!", "");
                                     var subject = subjectRepository.GetSubjects().Result.Where(s => s.Code == account.SubjectCode).SingleOrDefault();
                                     if (subject == null)
                                     {
                                         throw new CrudException(HttpStatusCode.NotFound, "Subject not found !!!", "");
                                     }
-                                    if(subject.Specialization.Id != s.Specialization.Id)
+                                    if (subject.Status == false) throw new CrudException(HttpStatusCode.BadRequest, $"Subject {subject.Code} is not avaliable !!!", "");
+                                    if (subject.Specialization.Id != s.Specialization.Id)
                                     {
                                         throw new CrudException(HttpStatusCode.BadRequest, "Specialization does not have this subject !!!", "");
                                     }
@@ -123,5 +187,19 @@ namespace Repository
                 throw new CrudException(HttpStatusCode.BadRequest, "Progress Error!!!", ex?.Message);
             }
         }
+/*
+        public async Task<List<SemesterResponse>> GetSemesters()
+        {
+            try
+            {
+                var rs = (SemesterDAO.Instance.GetSemesters().ToList());
+                return _mapper.Map<List<SemesterResponse>>(rs);
+            }
+            catch (Exception ex)
+            {
+                throw new CrudException(HttpStatusCode.BadRequest, "Get list semester error!!!!!", ex.Message);
+            }
+        }
+*/
     }
 }

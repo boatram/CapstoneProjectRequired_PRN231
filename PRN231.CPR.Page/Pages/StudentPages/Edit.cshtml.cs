@@ -28,9 +28,10 @@ namespace PRN231.CPR.Page.Pages.StudentPages
             string token = SessionHelper.GetObjectFromJson<string>(HttpContext.Session, "jwt");
             string role = SessionHelper.GetObjectFromJson<string>(HttpContext.Session, "role");
             string refreshToken = SessionHelper.GetObjectFromJson<string>(HttpContext.Session, "refreshToken");
-            refreshToken = refreshToken.Replace(" ", "+");
+          
             if (token != null && refreshToken !=null && role !=null)
             {
+                refreshToken = refreshToken.Replace(" ", "+");
                 if (role.Equals("Student") || role.Equals("Lecturer"))
                 {
                     string email = User.FindFirstValue(ClaimTypes.Email);
@@ -68,9 +69,10 @@ namespace PRN231.CPR.Page.Pages.StudentPages
             string token = SessionHelper.GetObjectFromJson<string>(HttpContext.Session, "jwt");
             string role = SessionHelper.GetObjectFromJson<string>(HttpContext.Session, "role");
             string refreshToken = SessionHelper.GetObjectFromJson<string>(HttpContext.Session, "refreshToken");
-            refreshToken = refreshToken.Replace(" ", "+");
+           
             if (token != null && role != null && refreshToken != null)
             {
+                refreshToken = refreshToken.Replace(" ", "+");
                 if (role.Equals("Student") || role.Equals("Lecturer"))
                 {
                     if (ModelState.IsValid)
@@ -100,7 +102,7 @@ namespace PRN231.CPR.Page.Pages.StudentPages
                                     SessionHelper.SetObjectAsJson(HttpContext.Session, "refreshToken", customer.RefreshToken);
                                     RedirectToPage("/StudentPages/Edit");
                                 }
-                                else return RedirectToPage("/Index");
+                                else return RedirectToPage("/StudentPages/HomePage", "logout", null);
                             }
                         }
                         HttpResponseMessage responseMessage = SendDataHelper<UpdateAccountRequest>.PutData($"https://localhost:7298/odata/Accounts/{Account.Id}", Account, token).Result;
@@ -121,7 +123,7 @@ namespace PRN231.CPR.Page.Pages.StudentPages
                                 SessionHelper.SetObjectAsJson(HttpContext.Session, "refreshToken", customer.RefreshToken);
                                 RedirectToPage("/StudentPages/Edit");
                             }
-                            else return RedirectToPage("/Index");
+                            else return RedirectToPage("/StudentPages/HomePage", "logout", null);
                         }
                         else
                         {

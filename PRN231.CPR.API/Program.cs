@@ -1,3 +1,4 @@
+using BusinessObjects.DTOs;
 using BusinessObjects.DTOs.Response;
 using Google.Apis.Auth.AspNetCore3;
 using Hangfire;
@@ -28,12 +29,10 @@ odata.EntitySet<AccountResponse>("Accounts");
 odata.EntitySet<SubjectResponse>("Subjects");
 odata.EntitySet<TopicResponse>("Topics");
 odata.EntitySet<SemesterResponse>("Semesters");
-odata.EntitySet<StudentInGroupResponse>("StudentInGroups").EntityType.HasKey(x=>x.Id);
-odata.EntitySet<TopicOfGroupResponse>("TopicOfGroups").EntityType.HasKey(x => new {x.TopicId,x.GroupProjectId});
+odata.EntitySet<SpecializationResponse>("Specialization");
+odata.EntitySet<TopicView>("TopicView");
 ;
-var issue = odata.EntitySet<GroupProjectResponse>("GroupProjects").EntityType.HasKey(x => x.Id);
-issue.HasMany<StudentInGroupResponse>(x => x.StudentInGroups);
-issue.HasMany<TopicOfGroupResponse>(x => x.TopicOfGroups);
+
 builder.Services.AddControllers()
     .AddOData(conf =>
     {
@@ -47,6 +46,7 @@ builder.Services.AddScoped<ISpecializationRepository, SpecializationRepository>(
 builder.Services.AddScoped<ISemesterRepository, SemesterRepository>();
 builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
 builder.Services.AddScoped<ITopicRepository, TopicRepository>();
+builder.Services.AddScoped<ITopicViewRepository, TopicViewRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IFileStorageService, FileStorageService>();
 builder.Services.AddScoped<ICacheService, CacheService>();
@@ -122,8 +122,14 @@ builder.Services.AddAuthorization(options =>
             {
                 ICacheService cacheService = new CacheService();
                 var cache = cacheService.GetData<string>($"{jwtClaimValue}");
-
-                if (cache != null)
+                var utcCreatedDate = long.Parse(context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Iat).Value);
+                var expiredDate = DateTimeOffset.FromUnixTimeSeconds(utcCreatedDate).DateTime;
+                TimeZoneInfo localTimeZone = TimeZoneInfo.Local;
+                TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+                DateTime vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, vietnamTimeZone);
+                if (expiredDate < vietnamTime)
+                    return false;
+                else if (cache != null)
                 {
                     return true;
                 }
@@ -141,7 +147,10 @@ builder.Services.AddAuthorization(options =>
             {
                 ICacheService cacheService = new CacheService();
                 var cache = cacheService.GetData<string>($"{jwtClaimValue}");
-
+                var utcCreatedDate = long.Parse(context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Iat).Value);
+                var expiredDate = DateTimeOffset.FromUnixTimeSeconds(utcCreatedDate).DateTime;
+                if (expiredDate < DateTime.Now)
+                    return false;
                 if (cache != null)
                 {
                     return true;
@@ -150,7 +159,28 @@ builder.Services.AddAuthorization(options =>
             return false;
         });
     } );
-   // options.AddPolicy("Student", policy => policy.RequireRole("Student"));
+    options.AddPolicy("Student", policy => {
+
+        policy.RequireRole("Student");
+        policy.RequireAssertion(context =>
+        {
+            var jwtClaimValue = context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Jti)?.Value;
+            if (jwtClaimValue != null)
+            {
+                ICacheService cacheService = new CacheService();
+                var cache = cacheService.GetData<string>($"{jwtClaimValue}");
+                var utcCreatedDate = long.Parse(context.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Iat).Value);
+                var expiredDate = DateTimeOffset.FromUnixTimeSeconds(utcCreatedDate).DateTime;
+                if (expiredDate < DateTime.Now)
+                    return false;
+                if (cache != null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        });
+    });
 });
 //end JWT
 var app = builder.Build();

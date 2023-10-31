@@ -20,3 +20,4 @@ input.addEventListener('change', (e) => {
     });
     reader.readAsDataURL(e.target.files[0]);
 });
+

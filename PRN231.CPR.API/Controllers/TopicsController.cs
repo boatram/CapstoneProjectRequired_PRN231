@@ -22,27 +22,27 @@ namespace PRN231.CPR.API.Controllers
         {
             topicRepository = repository;
         }
-
+       [Authorize]
         [EnableQuery]
-
         public async Task<ActionResult<List<TopicResponse>>> Get()
         {
             var rs = await topicRepository.GetTopics();
             return Ok(rs);
         }
-        public async Task<ActionResult<TopicResponse>> Post(IFormFile file)
+       // [Authorize(Roles ="Lecturer")]
+        [HttpPost("topic-of-lecturer")]
+        public async Task<ActionResult<TopicResponse>> Post(IFormFile file, int id)
         {
-            var rs = await topicRepository.Create(file);
+            var rs = await topicRepository.Create(file,id);
             return Ok(rs);
         }
-        [HttpPut]
-        public async Task<ActionResult> Put(int key)
-        {
-            if (key == 0) return NotFound();
-            topicRepository.UpdateStatus(key);
-            return Ok();
-        }
 
+        [HttpPut("accept-topic")]
+        public async Task<ActionResult> Put(int topicId, int groupId)
+        {
+           var rs= topicRepository.Update(topicId,groupId);
+            return Ok(rs);
+        }
         /*
         // GET api/<TopicViewController>/5
         [HttpGet("{id}")]

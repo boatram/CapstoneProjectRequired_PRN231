@@ -15,7 +15,7 @@ namespace PRN231.CPR.Page.Pages.StudentPages
 {
     public class HomePageModel : PageModel
     {
-        public async Task<IActionResult> OnGet(string code)
+            public async Task<IActionResult> OnGet(string code)
         {
             try
             {

@@ -1,6 +1,5 @@
 ﻿using BusinessObjects.DTOs.Request;
 using BusinessObjects.DTOs.Response;
-using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
@@ -11,7 +10,9 @@ using ODataController = Microsoft.AspNetCore.OData.Routing.Controllers.ODataCont
 
 namespace PRN231.CPR.API.Controllers
 {
-    public class GroupProjectsController : ODataController
+    [Route("api/[controller]")]
+    [ApiController]
+    public class GroupProjectsController : ControllerBase
     {
         private readonly IGroupProjectRepository groupRepository;
 
@@ -19,27 +20,33 @@ namespace PRN231.CPR.API.Controllers
         {
             groupRepository = repository;
         }
-        [EnableQuery]
-        public async Task<ActionResult<List<GroupProjectResponse>>> Get()
+        [HttpGet]
+        public async Task<ActionResult<List<GroupProjectResponse>>> GetGroupProjects()
         {
             var rs = await groupRepository.GetGroupProjects();
             return Ok(rs);
         }
-        [EnableQuery]
-        public async Task<ActionResult<GroupProjectResponse>> Get(int key)
+        [HttpGet("group-project-lecturer")]
+        public async Task<ActionResult<List<GroupProjectResponse>>> GetGroupProjectsByLecturer(string email)
         {
-            var rs = await groupRepository.GetGroupProjectById(key);
+            var rs = await groupRepository.GetGroupProjectsByLecturer(email);
+            return Ok(rs);
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<GroupProjectResponse>> GetGroupProjectById(int id)
+        {
+            var rs = await groupRepository.GetGroupProjectById(id);
             return Ok(rs);
         }
 
-        [HttpPut]
-        public async Task<ActionResult<GroupProjectResponse>> Put([FromBody] UpdateGroupProjectRequest userRequest, int key)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<GroupProjectResponse>> Put([FromBody] UpdateGroupProjectRequest userRequest, int id)
         {
-            var rs = await groupRepository.UpdateGroupProject(key, userRequest);
+            var rs = await groupRepository.UpdateGroupProject(id, userRequest);
             if (rs == null) return NotFound();
             return Ok(rs);
         }
-
+        [HttpPost]
         public async Task<ActionResult<GroupProjectResponse>>Post([FromBody]GroupProjectRequest request)
         {
             var rs = await groupRepository.CreateGroupProject(request);

@@ -1,15 +1,15 @@
 ﻿using BusinessObjects;
 using BusinessObjects.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Repository;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace PRN231.CPR.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class TopicViewController : ControllerBase
+    public class TopicViewController : ODataController
     {
         private readonly ITopicViewRepository topicViewRepository;
 
@@ -19,7 +19,7 @@ namespace PRN231.CPR.API.Controllers
         }
 
         // GET: api/<TopicViewController>
-        [HttpGet]
+        [EnableQuery]
         public async Task<ActionResult<IEnumerable<TopicView>>> Get()
         {
             var ss = topicViewRepository.GetTopicViews();
@@ -28,24 +28,11 @@ namespace PRN231.CPR.API.Controllers
             return Ok(ss);
         }
 
-        // POST api/<TopicViewController>
-        [HttpPost]
-        public async Task<ActionResult> Post([FromBody] TopicView value)
-        {
-            if (value != null)
-            {
-                topicViewRepository.CreateTopicView(value);
-                return Ok();
-            }
-            return BadRequest();
-        }
-
         // PUT api/<TopicViewController>/5
-        [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id)
+        public async Task<ActionResult> Put(int key)
         {
-            if (id == 0) return NotFound();
-            topicViewRepository.UpdateStatus(id);
+            if (key == 0) return NotFound();
+            topicViewRepository.UpdateStatus(key);
             return Ok();
         }
 

@@ -58,8 +58,10 @@ namespace PRN231.CPR.Page.Pages
                     SessionHelper.SetObjectAsJson(HttpContext.Session, "jwt", customer.Token);
                     SessionHelper.SetObjectAsJson(HttpContext.Session, "refreshToken", customer.RefreshToken);
                     SessionHelper.SetObjectAsJson(HttpContext.Session, "role", role);
-                    if (role.Equals("admin"))
+                    if (role.Equals("Admin"))
                         return RedirectToPage("/AdminDashboard");
+                    if (role.Equals("Lecturer"))
+                        return RedirectToPage("/LecturerDashboard");
                     else
                         return RedirectToPage("/StudentPages/HomePage");
                 }

@@ -1,0 +1,95 @@
+﻿@page
+@model PRN231.CPR.Page.Pages.SpecializationPages.IndexModel
+@{
+    Layout = "../Shared/_LayoutHome.cshtml";
+
+}
+	<div class="container" style="padding:64px">
+		<div class="main-content-account">
+	<div class="row pt-4">
+		<div class="col-6">
+			<h2 class="text-primary">Specialization List </h2>
+		</div>
+		<div class="col-6 text-end">
+			<a  asp-page="create" class="btn btn-primary">
+				<i class="bi bi-plus-square"></i> &nbsp;Create Specialization
+			</a>
+		</div>
+	</div>
+
+	<br /><br />
+
+	<form  method="get">
+		<div class="form-actions no-color">
+			<p>
+				Find: 
+				<select name="SearchBy">
+					<option value="byname">by name</option>
+					<option value="byid">by code</option>
+				</select>
+				<input type="text" name="SearchString" value="@Model.CurrentFilter" />
+				<input type="submit" value="Search" class="btn btn-primary" />
+			</p>
+		</div>
+	</form>
+
+	<table class="table table-bordered table-striped" style="table-layout: auto">
+		<thead>
+			<tr>
+				<th>
+					Code
+				</th>
+				<th>
+					 Name
+				</th>
+				<th>
+					Description
+				</th>
+				<th>
+					Status
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (Model.Specializations != null && Model.Specializations.Count() > 0)
+			{
+				@foreach (var staff in Model.Specializations)
+				{
+					<tr>
+						<td >@staff.Code</td>
+
+						<td >@staff.Name</td>
+
+						<td>@staff.Description</td>
+
+						<td >@staff.Status</td>
+					
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+	@if (Model.Specializations != null && Model.Specializations.Count() > 0)
+	{
+		
+			var prevDisabled = !Model.Specializations.HasPreviousPage ? "disabled" : "";
+			var nextDisabled = !Model.Specializations.HasNextPage ? "disabled" : "";
+
+	<a asp-page="/SpecializationPages/Index"
+	   asp-route-sortOrder="@Model.CurrentSort"
+	   asp-route-pageIndex="@(Model.Specializations.PageIndex - 1)"
+	   asp-route-currentFilter="@Model.CurrentFilter"
+	class="btn btn-primary @prevDisabled">
+		Previous
+	</a>
+
+	<a asp-page="/SpecializationPages/Index"
+	   asp-route-sortOrder="@Model.CurrentSort"
+	   asp-route-pageIndex="@(Model.Specializations.PageIndex + 1)"
+	   asp-route-currentFilter="@Model.CurrentFilter"
+	   class="btn btn-primary @nextDisabled">
+		Next
+	</a>
+	}
+	</div>
+	</div>

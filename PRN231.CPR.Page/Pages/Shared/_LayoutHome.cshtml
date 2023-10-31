@@ -57,7 +57,7 @@
      <nav class="navbar navbar-expand-lg">
             <div class="container">
                 <a class="navbar-brand" asp-page="/StudentPage/HomePage" >
-                <img class="logo-img" src="https://feid.fpt.edu.vn/FPT_Education_logo.svg"
+                <img class="logo-img" src="https://feid.fpt.edu.vn/FPT_Education_logo.svg" />
                 </a>
 
                 <div class="d-lg-none ms-auto me-4">
@@ -70,33 +70,79 @@
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-lg-5 me-lg-auto">
-                        <li class="nav-item">
-                            <a class="nav-link click-scroll" asp-page="/StudentPages/HomePage">Home</a>
-                        </li>
+                         @if (User.IsInRole("Student"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link click-scroll" asp-page="/StudentPages/HomePage">Home</a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link click-scroll" asp-page="/StudentPages">Browse Topics</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link click-scroll" asp-page="/StudentPages/HomePage">Browse Topics</a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link click-scroll" asp-page="/StudentPages">Create Group Project</a>
-                        </li>
-                    <li class="nav-item">
-                        <a class="nav-link click-scroll" asp-page="/StudentPages/Edit">My Profile</a>
-                    </li>
+                            <li class="nav-item">
+                                <a class="nav-link click-scroll" asp-page="/StudentPages/HomePage">Create Group Project</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link click-scroll" asp-page="/StudentPages/Edit">My Profile</a>
+                            </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
 
-                            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                                <li><a class="dropdown-item" href="topics-listing.html">Topics Listing</a></li>
+                                <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                                    <li><a class="dropdown-item" href="topics-listing.html">Topics Listing</a></li>
 
-                                <li><a class="dropdown-item" href="contact.html">Contact Form</a></li>
-                            </ul>
-                        </li>
+                                    <li><a class="dropdown-item" href="contact.html">Contact Form</a></li>
+                                </ul>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
+
+                                <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                                    <li><a class="dropdown-item" asp-page="/StudentPages/Index">Student</a></li>
+
+                                    <li><a class="dropdown-item" asp-page="/LecturerPages/Index">Lecturer</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" asp-page="/SubjectPages/Index">Subject</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" asp-page="/SpecializationPages/Index">Specialization</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-page="/SemesterPages/Index">Semester</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-page="/TopicPages/Index">Topic</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-page="/GroupProjectPages/Index">GroupProject</a>
+                            </li>                          
+                        }
+                        @if (User.IsInRole("Lecturer"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link click-scroll" asp-page="/StudentPages/Edit">My Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-page="/LecturerPages/Topic">Topic</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-page="/LecturerPages/GroupProject">GroupProject</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-page="/LecturerPages/Notification">Notification</a>
+                            </li>
+                        }
                     </ul>
-
-                    <div class="d-none d-lg-block">
+                        <div class="d-none d-lg-block">
                         <a  asp-page="/StudentPages/HomePage" asp-page-handler="logout" class="">
                         <img class="icon-img" src="https://cdn-icons-png.flaticon.com/512/56/56805.png" />
                         </a>
@@ -114,5 +160,6 @@
     <script src="~/js/click-scroll.js"></script>
     <script src="~/js/custom.js"></script>
     <script src="~/js/site.js"></script>
+         <script src="~/js/file.js"></script>
 </body>
 </html>

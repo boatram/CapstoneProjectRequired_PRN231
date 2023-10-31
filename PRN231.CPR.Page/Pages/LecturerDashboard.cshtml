@@ -1,0 +1,30 @@
+﻿@page
+@model PRN231.CPR.Page.Pages.LecturerDashboardModel
+@{
+    Layout = "Shared/_LayoutHome.cshtml";
+
+}
+<main class="masthead back text-white text-center">
+<div class="container d-flex align-items-center flex-column">
+            <!-- Masthead Avatar Image-->
+            @if (Model.Gender != null && Model.Gender.Equals("Male"))
+            {
+                <img class="masthead-avatar mb-5" src="~/img/avataaars.svg" alt="..." />
+            }
+            @if (Model.Gender != null && Model.Gender.Equals("Female"))
+            {
+                <img class="masthead-avatar mb-5" src="~/img/female.png" alt="..." />
+            }
+            <!-- Masthead Heading-->
+            <h1 class="masthead-heading text-uppercase mb-0">Hello @User.Identity.Name </h1>
+            <!-- Icon Divider-->
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Masthead Subheading-->
+                <p class="masthead-subheading font-weight-light mb-0">Lecturer</p>
+         
+        </div>
+        </main>

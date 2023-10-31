@@ -13,10 +13,9 @@ namespace Repository
 {
     public interface ISemesterRepository
     {
-        void Update(int Id);
-        void Create(SemesterRequest semester);
+        Task<SemesterResponse> CreateSemester(SemesterRequest request);
         Semester GetSemesterByID(int? Id);
-        IEnumerable<SemesterResponse> GetSemesters();
         Task<List<StudentInSemesterResponse>> CreateStudentInSemester(IFormFile file);
+        Task<List<SemesterResponse>> GetSemesters();
     }
 }

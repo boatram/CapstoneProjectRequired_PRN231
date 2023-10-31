@@ -2,9 +2,11 @@
 using BusinessObjects.BusinessObjects;
 using BusinessObjects.DTOs.Request;
 using BusinessObjects.DTOs.Response;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,21 +30,14 @@ namespace DataAccess
                 }
             }
         }
-        
-        public IEnumerable<SemesterResponse> GetSemesters()
+
+        public List<Semester> GetSemesters()
         {
-            var semesters = new List<SemesterResponse>();
+            var semesters = new List<Semester>();
             try
             {
                 using var context = new CPRContext();
-                semesters = context.Semesters.Select(a => new SemesterResponse
-                {
-                    Id = a.Id,
-                    Code = a.Code,
-                    StartDate = a.StartDate,
-                    EndDate = a.EndDate,
-                    Status = true,
-                }).ToList();
+                semesters = context.Semesters.ToList();
             }
             catch (Exception ex)
             {
@@ -87,21 +82,17 @@ namespace DataAccess
             return id;
         }
 
-        public void Create(SemesterRequest semester)
+        public Semester AddNew(Semester semester)
         {
             try
             {
-                Semester _semester = new Semester();
-                _semester.Id = GetSemesterIdByCode(semester.Code);
-                using var context = new CPRContext();
-                if (_semester.Id == 0)
+                Semester _semester = GetSemesterByID(semester.Id);
+                if (_semester == null)
                 {
-                    _semester.Code = semester.Code;
-                    _semester.StartDate = semester.StartDate;
-                    _semester.EndDate = semester.EndDate;
-                    _semester.Status = true;
-                    context.Semesters.Add(_semester);
+                    using var context = new CPRContext();
+                    context.Semesters.Add(semester);
                     context.SaveChanges();
+                    return _semester;
                 }
                 else
                 {
@@ -113,8 +104,8 @@ namespace DataAccess
                 throw new Exception(ex.Message);
             }
         }
-       
-        public void Update(int Id)
+
+        public void Update(int Id,Semester semester)
         {
             try
             {
@@ -122,8 +113,7 @@ namespace DataAccess
                 if (_semester != null)
                 {
                     using var context = new CPRContext();
-                    _semester.Status = false;
-                    context.Semesters.Update(_semester);
+                    context.Semesters.Update(semester);
                     context.SaveChanges();
                 }
                 else

@@ -1,0 +1,46 @@
+﻿@page
+@model PRN231.CPR.Page.Pages.StudentPages.CreateModel
+@{
+    Layout = "../Shared/_LayoutHome.cshtml";
+
+}
+<div class="container import">
+    <form method="post" enctype="multipart/form-data">
+    <div class="box">
+        <h1 class="file">Import Student List</h1>
+            <h2 class="import-info">Please import the following information: Name, Email, Phone, Code, Gender (Male/Female) and Specialization Code</h2>
+        <div class="upload-box">
+            <i class="fa fa-cloud-upload color"></i>
+            <h3 class="upload">Upload your file here</h3>
+            <h4 class="support">Files supported:.xlxs</h4>
+            <div class="input-box">
+                <label class="label-click" for="click">
+                    Browse
+                        <input type="file" id="click" name="file" class="input-click" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+                </label>
+            </div>
+        </div>
+        <div class="imgbox">
+            <div class="iconbox">
+                <div class="fa-solid fa-file"></div>
+            </div>
+            <div class="info-box">
+                <p class="file-name">index.html</p>
+            </div>
+            <button class="icon">
+                <i class="fa-solid fa-trash trash"></i>
+            </button>
+        </div>
+            <span class="text-danger " style="font-weight:bold">@Model.Message</span>
+         <div class="button-save">
+           <button class="save-button" type="submit">
+                <span class="save"></span>
+                <span class="save"></span>
+                <span class="save"></span>
+                <span class="save"></span>
+                Import
+            </button>
+        </div>
+    </div>
+    </form>
+</div>

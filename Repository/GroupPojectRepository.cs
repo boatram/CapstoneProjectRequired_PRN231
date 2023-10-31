@@ -25,13 +25,15 @@ namespace Repository
         private readonly IAccountRepository accountRepository;
         private readonly ITopicRepository topicRepository;
         private readonly ISemesterRepository semesterRepository;
-        public GroupPojectRepository(IMapper mapper,ISubjectRepository subjectRepository, IAccountRepository accountRepository, ITopicRepository topicRepository, ISemesterRepository semesterRepository)
+        private readonly ITopicViewRepository topicViewRepository;
+        public GroupPojectRepository(IMapper mapper,ISubjectRepository subjectRepository, IAccountRepository accountRepository, ITopicRepository topicRepository, ISemesterRepository semesterRepository, ITopicViewRepository topicViewRepository)
         {
             this.mapper = mapper;
             this.subjectRepository = subjectRepository;
             this.accountRepository = accountRepository;
             this.topicRepository = topicRepository;
             this.semesterRepository = semesterRepository;
+            this.topicViewRepository = topicViewRepository;
         }
 
         public async Task<GroupProjectResponse> ChangeLeaderInGroup(int groupId, string code)
@@ -63,7 +65,7 @@ namespace Repository
                     Status = x.Status,
                     StudentInGroups = mapper.Map<List<StudentInGroupResponse>>(group.StudentInGroups),
                     TopicOfGroups = mapper.Map<List<TopicOfGroupResponse>>(group.TopicOfGroups)
-                }).FirstOrDefault();
+                }).SingleOrDefault(x => x.Id == groupId);
                 return groupResult;
             }
             catch (CrudException ex)
@@ -77,7 +79,7 @@ namespace Repository
         }
         private bool CheckStudentHasGroup(int id)
         {
-           var s= semesterRepository.GetSemesters().Where(a => a.StartDate <= DateTime.UtcNow && a.EndDate >= DateTime.UtcNow).SingleOrDefault();
+           var s= semesterRepository.GetSemesters().Result.Where(a => a.StartDate <= DateTime.UtcNow && a.EndDate >= DateTime.UtcNow).SingleOrDefault();
             var list = GetGroupProjectBySemester(s.Code).Result .Select(a=>a.StudentInGroups);
             foreach(var project in list)
             {
@@ -121,15 +123,8 @@ namespace Repository
                 else
                     throw new CrudException(HttpStatusCode.BadRequest, "Students are not eligible to create a group ", "");
                 groupProject.StudentInGroups=students;
-                GroupDAO.Instance.AddNew(groupProject);
-                var groupResult = GroupDAO.Instance.GetGroupProjects().Select(x => new GroupProjectResponse()
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Status = x.Status,
-                    StudentInGroups = studentInGroups,
-                }).FirstOrDefault();
-                return groupResult;
+                GroupDAO.Instance.AddNew(groupProject);             
+                return mapper.Map<GroupProjectResponse>(groupProject);
                 }
                
               
@@ -166,7 +161,7 @@ namespace Repository
                 if (3 > group.StudentInGroups.Count() || group.StudentInGroups.Count() > 5)
                     throw new CrudException(HttpStatusCode.BadRequest, "Not enough members to create a group", "");
 
-                var s = semesterRepository.GetSemesters().Where(a => a.StartDate <= DateTime.UtcNow && a.EndDate >= DateTime.UtcNow).SingleOrDefault();
+                var s = semesterRepository.GetSemesters().Result.Where(a => a.StartDate <= DateTime.UtcNow && a.EndDate >= DateTime.UtcNow).SingleOrDefault();
                 List<TopicOfGroupResponse> topicOfGroups = new List<TopicOfGroupResponse>();
                 var topic = topicRepository.GetTopics().Result.Where(a => a.Id == topicId && a.SemesterId==s.Id && a.Status==true).SingleOrDefault();
                 if( topic ==null )
@@ -196,7 +191,7 @@ namespace Repository
                     Status = x.Status,
                     StudentInGroups = mapper.Map<List<StudentInGroupResponse>>(group.StudentInGroups),
                     TopicOfGroups= topicOfGroups
-                }).FirstOrDefault();
+                }).SingleOrDefault(x=>x.Id==groupId);
                 return groupResult;
             }
             catch (CrudException ex)
@@ -304,7 +299,31 @@ namespace Repository
                 throw new CrudException(HttpStatusCode.BadRequest, "Get group list error!!!!!", ex.Message);
             }
         }
-
+        public async Task<IEnumerable<GroupProjectResponse>> GetGroupProjectsByLecturer(string email)
+        {
+            try
+            {
+                var lecturer = accountRepository.GetAccounts().Result.Where(a => a.Email == email).SingleOrDefault();
+                List<GroupProjectResponse> list = new List<GroupProjectResponse>();
+                if(lecturer==null)
+                    throw new CrudException(HttpStatusCode.NotFound, "Lecturer Not Found !!!!!","");
+                var topic = topicViewRepository.GetTopicViews().Where(a => a.SuperLecturerEmail.Equals(email)).ToList();
+                foreach (var t in topic)
+                {
+                    var group = TopicOfGroupDAO.Instance.GetTopicOfGroupByTopicID(t.Id).Where(a=>a.Status==true).SingleOrDefault();
+                    if (group != null)
+                    {
+                        var rs = GetGroupProjectById(group.GroupProjectId).Result;
+                        list.Add(rs);
+                    }
+                }
+                return list.AsEnumerable();
+            }
+            catch (CrudException ex)
+            {
+                throw new CrudException(HttpStatusCode.BadRequest, "Get group list by lecturer error!!!!!", ex.Message);
+            }
+        }
         public async Task<GroupProjectResponse> LeaveGroup(int groupId, string code)
         {
             try
@@ -322,7 +341,7 @@ namespace Repository
                     {
                         throw new CrudException(HttpStatusCode.NotFound, $"Not found student with id{groupId.ToString()}", "");
                     }
-                    var s = semesterRepository.GetSemesters().Where(a => a.StartDate <= DateTime.UtcNow && a.EndDate >= DateTime.UtcNow).SingleOrDefault();
+                    var s = semesterRepository.GetSemesters().Result.Where(a => a.StartDate <= DateTime.UtcNow && a.EndDate >= DateTime.UtcNow).SingleOrDefault();
                     if (TopicOfGroupDAO.Instance.GetTopicOfGroups().Where(a => a.GroupProjectId == groupId && a.Status == true && a.Topic.SemesterId==s.Id).SingleOrDefault()!=null)
                         throw new CrudException(HttpStatusCode.NotFound, "Once you have registered for a topic, you are not allowed to leave the group", "");
                     if(stu.StudentId == studentInGroup.Id && stu.Status==true) throw new CrudException(HttpStatusCode.NotFound, "You must change the leader position to another person in the group before leaving", "");
@@ -336,7 +355,7 @@ namespace Repository
                     Status = x.Status,
                     StudentInGroups = mapper.Map<List<StudentInGroupResponse>>(group.StudentInGroups),
                     TopicOfGroups = mapper.Map<List<TopicOfGroupResponse>>(group.TopicOfGroups)
-                }).FirstOrDefault();
+                }).SingleOrDefault(x => x.Id == groupId);
                 return groupResult;
             }
             catch (CrudException ex)
@@ -417,7 +436,7 @@ namespace Repository
                     Name = x.Name,
                     Status = x.Status,
                     StudentInGroups = studentInGroups,
-                }).FirstOrDefault();
+                }).SingleOrDefault(x=>x.Id==groupId);
                 return groupResult;
             }
             catch (CrudException ex)

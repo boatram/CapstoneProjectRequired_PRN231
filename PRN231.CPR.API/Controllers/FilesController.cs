@@ -25,12 +25,6 @@ namespace PRN231.CPR.API.Controllers
             string url = await _fileStorageService.UploadFileToDefaultAsync(file.OpenReadStream(), file.FileName);
             return Ok(url);
         }
-        [HttpPost("excel")]
-        public async Task<FileStreamResult> ExportFile()
-        {
-            var rs= await _fileStorageService.ExportStudentToExcel();
-            return rs;
-        }
 
     }
 }

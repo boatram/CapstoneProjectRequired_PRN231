@@ -20,6 +20,5 @@ namespace BusinessObjects.DTOs.Response
         public string TopicName { get; set; }
         public string SemesterCode { get; set; }
         public string SpecializationName { get; set; }
-
     }
 }

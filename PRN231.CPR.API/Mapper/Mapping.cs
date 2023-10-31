@@ -30,7 +30,10 @@ namespace PRN231.CPR.API.Mapper
             CreateMap<SubjectResponse, Subject>().ReverseMap();
 
             CreateMap<Specialization, SpecializationResponse>().ReverseMap();
+            CreateMap<Specialization, SpecializationRequest>().ReverseMap();
 
+            CreateMap<Semester, SemesterResponse>().ReverseMap();
+            CreateMap<Semester, SemesterRequest>().ReverseMap();
             CreateMap<StudentInSemesterRequest, StudentInSemester>().ReverseMap();
             CreateMap<StudentInSemesterResponse, StudentInSemester>().ReverseMap();
 

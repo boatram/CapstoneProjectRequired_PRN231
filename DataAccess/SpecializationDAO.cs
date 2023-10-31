@@ -81,24 +81,21 @@ namespace DataAccess
             return s;
         }
 
-        public void Create(SpecializationRequest s)
+        public Specialization AddNew(Specialization specialization)
         {
             try
             {
-                Specialization _s = GetSpecializationByCode(s.Code);
-                using var context = new CPRContext();
-                if (_s== null)
+                Specialization _specialization = GetSpecializationByID(specialization.Id);
+                if (_specialization == null)
                 {
-                    var sp = new Specialization();
-                    sp.Code = s.Code;
-                    sp.Name = s.Name;
-                    sp.Description = s.Description;
-                    sp.Status = true;
-                    context.Specializations.Add(sp);
+                    using var context = new CPRContext();
+                    context.Specializations.Add(specialization);
+                    context.SaveChanges();
+                    return _specialization;
                 }
                 else
                 {
-                    throw new Exception("The Specialization is already exist.");
+                    throw new Exception("The specialization is already exist.");
                 }
             }
             catch (Exception ex)

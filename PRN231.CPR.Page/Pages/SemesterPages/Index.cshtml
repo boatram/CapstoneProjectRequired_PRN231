@@ -1,0 +1,93 @@
+﻿@page
+@model PRN231.CPR.Page.Pages.SemesterPages.IndexModel
+@{
+    Layout = "../Shared/_LayoutHome.cshtml";
+
+}
+<div class="container" style="padding:64px">
+		<div class="main-content-account">
+	<div class="row pt-4">
+		<div class="col-6">
+			<h2 class="text-primary">Semester List </h2>
+		</div>
+		<div class="col-6 text-end">
+			<a  asp-page="create" class="btn btn-primary">
+				<i class="bi bi-plus-square"></i> &nbsp; Create Semester
+			</a>
+		</div>
+	</div>
+
+	<br /><br />
+
+	<form  method="get">
+		<div class="form-actions no-color">
+			<p>
+				Find: 
+				<select name="SearchBy">
+					<option value="byid">by code</option>
+				</select>
+				<input type="text" name="SearchString" value="@Model.CurrentFilter" />
+				<input type="submit" value="Search" class="btn btn-primary" />
+			</p>
+		</div>
+	</form>
+
+	<table class="table table-bordered table-striped" style="table-layout: auto">
+		<thead>
+			<tr>
+				<th>
+					Code
+				</th>
+				<th>
+					 Start Date
+				</th>
+				<th>
+					End Date
+				</th>
+				<th>
+					Status
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (Model.Semesters != null && Model.Semesters.Count() > 0)
+			{
+				@foreach (var staff in Model.Semesters)
+				{
+					<tr>
+						<td >@staff.Code</td>
+
+						<td >@staff.StartDate</td>
+
+						<td >@staff.EndDate</td>
+
+						<td >@staff.Status</td>					
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+	@if (Model.Semesters != null && Model.Semesters.Count() > 0)
+	{
+		
+			var prevDisabled = !Model.Semesters.HasPreviousPage ? "disabled" : "";
+			var nextDisabled = !Model.Semesters.HasNextPage ? "disabled" : "";
+
+	<a asp-page="/SemesterPages/Index"
+	   asp-route-sortOrder="@Model.CurrentSort"
+	   asp-route-pageIndex="@(Model.Semesters.PageIndex - 1)"
+	   asp-route-currentFilter="@Model.CurrentFilter"
+	class="btn btn-primary @prevDisabled">
+		Previous
+	</a>
+
+			<a asp-page="/SemesterPages/Index"
+	   asp-route-sortOrder="@Model.CurrentSort"
+	   asp-route-pageIndex="@(Model.Semesters.PageIndex + 1)"
+	   asp-route-currentFilter="@Model.CurrentFilter"
+	   class="btn btn-primary @nextDisabled">
+		Next
+	</a>
+	}
+	</div>
+	</div>

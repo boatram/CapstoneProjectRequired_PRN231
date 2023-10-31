@@ -1,0 +1,89 @@
+﻿@page
+@model PRN231.CPR.Page.Pages.GroupProjectPages.IndexModel
+@{
+	Layout = "../Shared/_LayoutHome.cshtml";
+
+}
+<div class="  profile profile-body">
+        <div class="main-content">
+            <div class="profile-detail">
+                <div class="profile-col">
+                    <div class="profile-content">                       
+                        <div class="profile-name">
+                            <p class="name">List Semester</p>
+                        </div>  
+                        <ul class="sideBarNav">
+                            @if (Model.Semesters != null && Model.Semesters.Count() > 0)
+			{
+                                @foreach (var semester in Model.Semesters)
+                                {
+                                    <li class="profile-attribute">
+                                        <a class="bar-nav-icon" asp-page="/GroupProjectPages/Index" asp-page-handler="semester" asp-route-code="@semester.Code"> <i class='bx bx-user-circle'></i>@semester.Code</a>
+                                    </li>
+                                }
+            } 
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-detail-2">
+                <div id="profile">
+                    <div class="profile-page-1">
+					<h4 class="text-primary">List Group Project</h4>
+                        <table class="table table-bordered table-striped" style="table-layout: auto">
+		<thead>
+			<tr>
+				<th>
+					Id
+				</th>
+				<th>
+					 Name
+				</th>
+		<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (Model.GroupProjects != null && Model.GroupProjects.Count() > 0)
+			{
+				@foreach (var groupProject in Model.GroupProjects)
+				{
+					<tr>
+						<td >@groupProject.Id</td>
+
+						<td >@groupProject.Name</td>		
+						<td>
+						<a asp-page="./Details" asp-route-id="@groupProject.Id" class="btn btn-primary mx-2">
+						Detail
+						</a>
+						</td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+					@if (Model.GroupProjects != null && Model.GroupProjects.Count() > 0)
+					{
+
+						var prevDisabled = !Model.GroupProjects.HasPreviousPage ? "disabled" : "";
+						var nextDisabled = !Model.GroupProjects.HasNextPage ? "disabled" : "";
+
+						<a asp-page="/GroupProjectsPages/Index"
+					   asp-route-sortOrder="@Model.CurrentSort"
+					   asp-route-pageIndex="@(Model.GroupProjects.PageIndex - 1)"
+					   class="btn btn-primary page @prevDisabled">
+							Previous
+						</a>
+
+						<a asp-page="/GroupProjectsPages/Index"
+					   asp-route-sortOrder="@Model.CurrentSort"
+					   asp-route-pageIndex="@(Model.GroupProjects.PageIndex + 1)"
+					   class="btn btn-primary page @nextDisabled">
+							Next
+						</a>
+					}
+                    </div>
+                </div>
+            </div>
+        </div>       
+</div>
+		

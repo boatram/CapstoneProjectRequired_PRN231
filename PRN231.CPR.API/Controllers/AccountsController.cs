@@ -55,12 +55,6 @@ namespace PRN231.CPR.API.Controllers
             if (rs == null) return NotFound();
             return Ok(rs);
         }
-        [HttpGet("{cusId:int}/blocked-user")]
-        public async Task<ActionResult<AccountResponse>> GetToUpdateStatus(int cusId)
-        {
-            var rs = await accountRepository.GetToUpdateStatus(cusId);
-            return Ok(rs);
-        }
         /// <summary>
         /// Send verification code by email
         /// </summary>
@@ -80,13 +74,14 @@ namespace PRN231.CPR.API.Controllers
             return Ok(rs);
         }
         [HttpPost("token-revoke")]
+        [Authorize]
         public async Task<ActionResult<AccountResponse>> RevokeRefreshToken(string email)
         {
             var rs = await accountRepository.RevokeRefreshToken(email);
             return Ok(rs);
         }
-        [AllowAnonymous]
         [HttpPost()]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<AccountResponse>> Post(IFormFile file, ExcelChoice choice)
         {
             var rs = await accountRepository.CreateAccount(file, choice);

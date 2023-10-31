@@ -71,18 +71,31 @@ namespace Repository
                                     foreach (AccountRequest account in list)
                                     {
                                     var customer = _mapper.Map<AccountRequest, Account>(account);
+                                    if (choice.ToString().Equals("Student"))
+                                    {
+                                        if (!Regex.IsMatch(account.Email, "^[a-zA-Z0-9._%+-]+@(fpt\\.edu\\.vn)$"))
+                                            throw new CrudException(HttpStatusCode.BadRequest, $"Email Student {customer.Email} invalid, must be @fpt.edu.vn !!!", "");
+                                        customer.RoleId = 1;
+                                    }
+                                    else
+                                    {
+                                        if (!Regex.IsMatch(account.Email, "^[a-zA-Z0-9._%+-]+@(fe\\.edu\\.vn|gmail\\.com)$"))
+                                            throw new CrudException(HttpStatusCode.BadRequest, $"Email Lecturer {customer.Email} invalid must be @fe.du.vn or gmail.com !!!", "");
+                                        customer.RoleId = 2;
+                                        CreatPasswordHash("1", out byte[] passwordHash, out byte[] passwordSalt);
+                                        customer.PasswordHash = passwordHash;
+                                        customer.PasswordSalt = passwordSalt;
+                                    }
                                     var s = AccountDAO.Instance.GetAccounts().Where(s => s.Code == account.Code).SingleOrDefault();
                                     if (s != null)
                                     {
-                                        throw new CrudException(HttpStatusCode.BadRequest, "Code has already !!!", "");
+                                        throw new CrudException(HttpStatusCode.BadRequest, $"Code {account.Code} has already !!!", "");
                                     }
                                     var cus = AccountDAO.Instance.GetAccounts().Where(s => s.Email == account.Email || s.Email.Equals(_config["AdminAccount:Email"])).SingleOrDefault();
                                     if (cus != null)
                                     {
-                                        throw new CrudException(HttpStatusCode.BadRequest, "Email has already !!!", "");
+                                        throw new CrudException(HttpStatusCode.BadRequest, $"Email {account.Email} has already !!!", "");
                                     }
-                                    if(!Regex.IsMatch(account.Email, "^[a-zA-Z0-9._%+-]+@(fpt\\.edu\\.vn|fe\\.edu\\.vn|gmail\\.com)$"))
-                                        throw new CrudException(HttpStatusCode.BadRequest, "Email invalid !!!", "");
                                     #region checkPhone
                                     var checkPhone = CheckVNPhone(account.Phone);
                                     if (!checkPhone)                                    
@@ -91,19 +104,10 @@ namespace Repository
                                     }
                                     #endregion
                                     customer.Status = true;
-                                    if (choice.ToString().Equals("Student"))
-                                        customer.RoleId = 1;                                                                             
-                                    else
-                                    {   
-                                        customer.RoleId = 2;
-                                        CreatPasswordHash("1", out byte[] passwordHash, out byte[] passwordSalt);
-                                        customer.PasswordHash = passwordHash;
-                                        customer.PasswordSalt = passwordSalt;
-                                    }
                                     var spec = specializationRepository.GetSpecializations().Where(a => a.Code.Equals(account.SpecializationCode)).SingleOrDefault();
                                     if (spec == null)
                                     {
-                                        throw new CrudException(HttpStatusCode.NotFound, "Specialization Not Found !!!", "");
+                                        throw new CrudException(HttpStatusCode.NotFound, $"Specialization Code {account.SpecializationCode} Not Found !!!", "");
                                     }
                                     customer.SpecializationId = spec.Id;
                                     AccountDAO.Instance.AddNew(customer);
@@ -216,32 +220,6 @@ namespace Repository
                 throw new CrudException(HttpStatusCode.BadRequest, "Get Account By ID Error!!!", ex.InnerException?.Message);
             }
         }
-
-        public async Task<AccountResponse> GetToUpdateStatus(int id)
-        {
-            try
-            {
-                Account customer = null;
-                customer = AccountDAO.Instance.GetAccounts().Where(s => s.Id == id).SingleOrDefault();
-
-                if (customer == null)
-                {
-                    throw new CrudException(HttpStatusCode.NotFound, $"Not found account with id{id.ToString()}", "");
-                }
-                customer.Status = false;
-                AccountDAO.Instance.Update(customer, id);
-                return _mapper.Map<Account, AccountResponse>(customer);
-            }
-            catch (CrudException ex)
-            {
-                throw ex;
-            }
-            catch (Exception ex)
-            {
-                throw new CrudException(HttpStatusCode.BadRequest, "Update account error!!!!!", ex.Message);
-            }
-        }
-
         public async Task<AccountResponse> Login(LoginRequest request)
         {
             try
@@ -249,7 +227,11 @@ namespace Repository
                 Account user = new Account();
                 string pass = _config["AdminAccount:Password"];
                 if (request.Email.Equals(_config["AdminAccount:Email"]) && request.Password.Equals(pass))
+                {
                     user.Name = "Admin";
+                    user.Email = request.Email;
+                }
+
                 else
                 {
                     user = AccountDAO.Instance.GetAccounts()
@@ -307,6 +289,7 @@ namespace Repository
                     if (_config["AdminAccount:JwtId"] != jti) throw new CrudException(HttpStatusCode.BadRequest, "Invalid Token", "");
                     if (DateTime.Parse(_config["AdminAccount:ExpiredDate"]) < DateTime.UtcNow) throw new CrudException(HttpStatusCode.BadRequest, "Expired Token", "");
                     acc.Name = "Admin";
+                    acc.Email = _config["AdminAccount:Email"];
                     acc.JwtId = _config["AdminAccount:JwtId"];
                 }
 
@@ -495,6 +478,7 @@ namespace Repository
                 new Claim(ClaimTypes.Email , customer.Email),
                new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.MobilePhone , customer.Phone),
+                new Claim("Gender" , customer.Gender)
                  });
                 customer.Token = GenerateRefreshToken(customer);
                 customer.AddedDate = DateTime.UtcNow;
@@ -506,6 +490,7 @@ namespace Repository
                 {
                      new Claim(ClaimTypes.NameIdentifier, "0"),
                 new Claim(ClaimTypes.Role, "Admin"),
+                new Claim(ClaimTypes.Email , customer.Email),
                  new Claim(ClaimTypes.Name , customer.Name),
                   new Claim(JwtRegisteredClaimNames.Jti,_config["AdminAccount:JwtId"])
                 });

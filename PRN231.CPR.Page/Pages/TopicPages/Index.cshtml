@@ -1,0 +1,94 @@
+﻿@page
+@model PRN231.CPR.Page.Pages.TopicPages.IndexModel
+@{
+	Layout = "../Shared/_LayoutHome.cshtml";
+
+}
+<div class="container" style="padding:64px">
+	<div class="main-content-account">
+		<div class="row pt-4">
+			<div class="col-6">
+				<h2 class="text-primary">Topic List </h2>
+			</div>
+		</div>
+
+		<br /><br />
+
+		<form method="get">
+			<div class="form-actions no-color">
+				<p>
+					Find:
+					<select name="SearchBy">
+						<option value="byname">by name</option>
+						<option value="bysemester">by semester code</option>
+						<option value="byspecialization">by specialization code</option>
+					</select>
+					<input type="text" name="SearchString" value="@Model.CurrentFilter" />
+					<input type="submit" value="Search" class="btn btn-primary" />
+				</p>
+			</div>
+		</form>
+
+		<table class="table table-bordered table-striped" style="table-layout: auto">
+			<thead>
+				<tr>
+					<th>
+						Name
+					</th>
+					<th>
+						Description
+					</th>
+					<th>
+						Semester Code
+					</th>
+					<th>
+						Specialization Name
+					</th>
+					<th>
+						Status
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				@if (Model.Topics != null && Model.Topics.Count() > 0)
+				{
+					@foreach (var staff in Model.Topics)
+					{
+						<tr>
+
+							<td>@staff.Name</td>
+
+							<td>@staff.Description</td>
+
+							<td>@staff.SemesterCode</td>
+							<td>@staff.SpecializationName</td>
+							<td>@staff.Status</td>
+						</tr>
+					}
+				}
+			</tbody>
+		</table>
+		@if (Model.Topics != null && Model.Topics.Count() > 0)
+		{
+
+			var prevDisabled = !Model.Topics.HasPreviousPage ? "disabled" : "";
+			var nextDisabled = !Model.Topics.HasNextPage ? "disabled" : "";
+
+			<a asp-page="/TopicsPages/Index"
+		   asp-route-sortOrder="@Model.CurrentSort"
+		   asp-route-pageIndex="@(Model.Topics.PageIndex - 1)"
+		   asp-route-currentFilter="@Model.CurrentFilter"
+		   class="btn btn-primary @prevDisabled">
+				Previous
+			</a>
+
+			<a asp-page="/TopicsPages/Index"
+		   asp-route-sortOrder="@Model.CurrentSort"
+		   asp-route-pageIndex="@(Model.Topics.PageIndex + 1)"
+		   asp-route-currentFilter="@Model.CurrentFilter"
+		   class="btn btn-primary @nextDisabled">
+				Next
+			</a>
+		}
+	</div>
+</div>

@@ -20,5 +20,6 @@ namespace Repository
         Task<GroupProjectResponse>CreatTopicOfGroup(int groupId, int topicId);
         Task<GroupProjectResponse> ChangeLeaderInGroup(int groupId, string code);
         Task<GroupProjectResponse> LeaveGroup(int groupId, string code);
+        Task<IEnumerable<GroupProjectResponse>> GetGroupProjectsByLecturer(string email);
     }
 }

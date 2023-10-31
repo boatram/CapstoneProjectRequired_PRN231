@@ -13,7 +13,7 @@ namespace Repository
     public interface ISpecializationRepository
     {
         void UpdateStatus(int id);
-        void Create(SpecializationRequest s);
+        Task<SpecializationResponse> CreateSpecialization(SpecializationRequest request);
         Specialization GetSpecializationByID(int? ID);
         IEnumerable<SpecializationResponse> GetSpecializations();
     }

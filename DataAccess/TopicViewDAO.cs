@@ -36,6 +36,7 @@ namespace DataAccess
                 using var context = new CPRContext();
                 topics = context.TopicOfLecturers.Select(x => new TopicView
                 {
+                    Id=x.TopicId,
                     Topic = context.Topics.SingleOrDefault(t => t.Id == x.TopicId),
                     Name = x.Topic.Name,
                     Description = x.Topic.Description,
