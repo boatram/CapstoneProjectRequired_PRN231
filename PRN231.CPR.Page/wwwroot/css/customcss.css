@@ -6,3 +6,66 @@
     width: 30px;
     height: 30px;
 }
+.red{
+    color: red;
+}
+.button-create {
+    border-radius: 50px;
+    height: 50px;
+    background-color: #13547a;
+    color:white;
+    font-size:x-large;
+    font-weight:1000;
+    text-align:center;
+    line-height:50px;
+}
+.group {
+    font-size:18px;
+    border: 3px solid;
+    border-radius:5px;
+}
+    .button-create:hover {
+        background-color: #13547a;
+        color: white;
+    }
+.member {
+    height: 60px;
+    border-bottom: 3px solid #13547a;
+}
+.member-img{
+    width: 50px;
+    height: 50px;
+}
+.button-table{
+    border-radius:10px;
+    margin-right:20px;
+}
+
+.edit {
+    padding:5px 10px 5px 10px;
+    background-color: #3f3d56;
+    color: white; 
+}
+.remove {
+    padding: 5px 10px 5px 10px;
+    background-color: red;
+    color: white;
+}
+.button-add {
+    height: 50px;
+    padding: 0 20px 0 20px;
+    border-radius: 30px;
+    background-color: #3f3d56;
+    color: white;
+    margin-bottom: 10px;
+    text-align: center;
+    line-height: 50px;
+}
+.button-contain {
+display:flex;
+justify-content:center;
+}
+.button-add:hover {
+    background-color: #3f3d56;
+    color: white;
+}

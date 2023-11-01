@@ -1,0 +1,126 @@
+﻿@page
+@model PRN231.CPR.Page.Pages.StudentPages.AddMemberModel
+@{
+	Layout = "../Shared/_LayoutHome.cshtml";
+}
+<main>
+    <section class="hero-section d-flex justify-content-center align-items-center ">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-8 col-12 mx-auto">
+                    <h1 class="text-white text-center">Adding member </h1>
+                    <form method="get" class="custom-form mt-4 pt-2 mb-lg-0 mb-5" role="search">
+                        <div class="input-group input-group-lg">
+                            <input name="keyword" type="search" class="form-control" id="keyword" placeholder="Searching member ...." aria-label="Search">
+
+                            <button type="submit" class="form-control">Search</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="group">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Gender</th>
+                                <th>Phone</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>se160136</td>
+                                <td>nguyen ba nhat tai</td>
+                                <td>tainbnse160136@gmail.com</td>
+                                <td>male</td>
+                                <td>0835537718</td>
+                                <td>
+                                    <a asp-page="./ManageGroup" asp-page-handler="AddMember" asp-route-id="id" class="button-table edit">ADD</a>    
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                 
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<footer class="site-footer section-padding">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-3 col-12 mb-4 pb-2">
+                <a class="navbar-brand" asp-page="/StudentPage/HomePage">
+                    <img class="logo-img" src="https://feid.fpt.edu.vn/FPT_Education_logo.svg"
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6">
+                <h6 class="site-footer-title mb-3">Resources</h6>
+
+                <ul class="site-footer-links">
+                    <li class="site-footer-link-item">
+                        <a href="#" class="site-footer-link">Home</a>
+                    </li>
+
+                    <li class="site-footer-link-item">
+                        <a href="#" class="site-footer-link">How it works</a>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6 mb-4 mb-lg-0">
+                <h6 class="site-footer-title mb-3">Information</h6>
+
+                <p class="text-white d-flex mb-1">
+                    <a href="tel: 0835537718" class="site-footer-link">
+                        08-3553-7718
+                    </a>
+                </p>
+
+                <p class="text-white d-flex">
+                    <a href="mailto:info@company.com" class="site-footer-link">
+                        info@company.com
+                    </a>
+                </p>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-12 mt-4 mt-lg-0 ms-auto">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        English
+                    </button>
+
+                    <ul class="dropdown-menu">
+                        <li><button class="dropdown-item" type="button">Thai</button></li>
+
+                        <li><button class="dropdown-item" type="button">Myanmar</button></li>
+
+                        <li><button class="dropdown-item" type="button">Arabic</button></li>
+                    </ul>
+                </div>
+
+                <p class="copyright-text mt-lg-5 mt-4">
+                    Copyright © 2048 Topic Listing Center. All rights reserved.
+
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+</footer>

@@ -44,8 +44,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/down/fptu/ki8/prn231/project/cpr-new/PRN231.CPR.Page/Pages/StudentPages/AddMember.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudFBhZ2VzXEFkZE1lbWJlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/down/fptu/ki8/prn231/project/cpr-new/PRN231.CPR.Page/Pages/StudentPages/CreateGroup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudFBhZ2VzXENyZWF0ZUdyb3VwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/down/fptu/ki8/prn231/project/cpr-new/PRN231.CPR.Page/Pages/StudentPages/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudFBhZ2VzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/down/fptu/ki8/prn231/project/cpr-new/PRN231.CPR.Page/Pages/StudentPages/EditMember.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudFBhZ2VzXEVkaXRNZW1iZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/down/fptu/ki8/prn231/project/cpr-new/PRN231.CPR.Page/Pages/StudentPages/HomePage.cshtml]
@@ -54,6 +66,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/down/fptu/ki8/prn231/project/cpr-new/PRN231.CPR.Page/Pages/StudentPages/ListTopic.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudFBhZ2VzXExpc3RUb3BpYy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/down/fptu/ki8/prn231/project/cpr-new/PRN231.CPR.Page/Pages/StudentPages/ManageGroup.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3R1ZGVudFBhZ2VzXE1hbmFnZUdyb3VwLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/down/fptu/ki8/prn231/project/cpr-new/PRN231.CPR.Page/Pages/_ViewImports.cshtml]
